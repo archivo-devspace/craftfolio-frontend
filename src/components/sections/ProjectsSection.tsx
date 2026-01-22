@@ -1,8 +1,9 @@
 'use client';
 
 import { ProjectsSection as ProjectsSectionType } from '@/types/portfolio';
-import { usePortfolioStore } from '@/store/portfolioStore';
-import { ExternalLink, Github, FolderOpen, Plus } from 'lucide-react';
+import { useTheme } from '@/hooks';
+import { ExternalLink, Github, FolderOpen } from 'lucide-react';
+import { SectionEmptyState } from '@/components/ui';
 
 interface Props {
   section: ProjectsSectionType;
@@ -11,20 +12,9 @@ interface Props {
 
 export function ProjectsSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { portfolio } = usePortfolioStore();
-  const { theme } = portfolio;
+  const { theme, radius, largeRadius, themeStyles } = useTheme();
 
-  // Map border radius to actual values
-  const borderRadiusMap = {
-    none: '0px',
-    small: '4px',
-    medium: '8px',
-    large: '16px',
-  };
-  const radius = borderRadiusMap[theme.borderRadius] || '8px';
-  const largeRadius = theme.borderRadius === 'none' ? '0px' : theme.borderRadius === 'small' ? '8px' : theme.borderRadius === 'medium' ? '16px' : '24px';
-
-  const layoutClasses = {
+  const layoutClasses: Record<string, string> = {
     grid: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6',
     list: 'flex flex-col gap-4 md:gap-6',
     masonry: 'columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6',
@@ -37,7 +27,8 @@ export function ProjectsSection({ section, isEditing }: Props) {
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
-        fontFamily: theme.fontFamily
+        fontFamily: theme.fontFamily,
+        ...themeStyles,
       }}
     >
       {/* Background pattern */}
@@ -110,15 +101,8 @@ export function ProjectsSection({ section, isEditing }: Props) {
 
                 {/* Project Info */}
                 <div className="p-6">
-                  <h3
-                    className="text-xl font-bold text-cloud mb-2 transition-colors group-hover:opacity-80"
-                    style={{ '--hover-color': theme.primaryColor } as React.CSSProperties}
-                  >
-                    {project.title}
-                  </h3>
-                  <p className="text-fog/60 text-sm mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
+                  <h3 className="text-xl font-bold text-cloud mb-2">{project.title}</h3>
+                  <p className="text-fog/60 text-sm mb-4 line-clamp-2">{project.description}</p>
 
                   {/* Tags */}
                   {project.tags && project.tags.length > 0 && (
@@ -130,7 +114,7 @@ export function ProjectsSection({ section, isEditing }: Props) {
                           style={{
                             backgroundColor: `${theme.primaryColor}20`,
                             color: theme.primaryColor,
-                            borderRadius: radius
+                            borderRadius: radius,
                           }}
                         >
                           {tag}
@@ -143,20 +127,12 @@ export function ProjectsSection({ section, isEditing }: Props) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full glass mb-6">
-              <FolderOpen className="w-10 h-10 text-slate-light" />
-            </div>
-            <p className="text-fog/50 mb-4">
-              {isEditing ? 'No projects yet. Add your first project!' : 'No projects to display'}
-            </p>
-            {isEditing && (
-              <button className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">
-                <Plus className="w-4 h-4" />
-                <span>Add Project</span>
-              </button>
-            )}
-          </div>
+          <SectionEmptyState
+            icon={<FolderOpen className="w-10 h-10 text-slate-light" />}
+            title={isEditing ? 'No projects yet. Add your first project!' : 'No projects to display'}
+            isEditing={isEditing}
+            actionLabel="Add Project"
+          />
         )}
       </div>
     </section>

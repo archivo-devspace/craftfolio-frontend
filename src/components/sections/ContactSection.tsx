@@ -1,7 +1,7 @@
 'use client';
 
 import { ContactSection as ContactSectionType } from '@/types/portfolio';
-import { usePortfolioStore } from '@/store/portfolioStore';
+import { useTheme } from '@/hooks';
 import {
   Mail,
   Phone,
@@ -11,12 +11,23 @@ import {
   Linkedin,
   Twitter,
   Globe,
-  Instagram
+  Instagram,
 } from 'lucide-react';
+import { LucideProps } from 'lucide-react';
 
 interface Props {
   section: ContactSectionType;
   isEditing?: boolean;
+}
+
+type IconComponent = React.ComponentType<LucideProps>;
+
+interface ContactInfoItem {
+  icon: IconComponent;
+  label: string;
+  value: string;
+  href: string | null;
+  color: string;
 }
 
 const socialIcons: Record<string, typeof Github> = {
@@ -29,23 +40,44 @@ const socialIcons: Record<string, typeof Github> = {
 
 export function ContactSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { portfolio } = usePortfolioStore();
-  const { theme } = portfolio;
-
-  // Map border radius to actual values
-  const borderRadiusMap = {
-    none: '0px',
-    small: '4px',
-    medium: '8px',
-    large: '16px',
-  };
-  const radius = borderRadiusMap[theme.borderRadius] || '8px';
-  const largeRadius = theme.borderRadius === 'none' ? '0px' : theme.borderRadius === 'small' ? '8px' : theme.borderRadius === 'medium' ? '16px' : '24px';
+  const { theme, radius, largeRadius, themeStyles } = useTheme();
 
   const getSocialIcon = (platform: string) => {
     const Icon = socialIcons[platform.toLowerCase()] || Globe;
     return <Icon className="w-5 h-5" />;
   };
+
+  const contactInfoItems: ContactInfoItem[] = [];
+
+  if (data.email) {
+    contactInfoItems.push({
+      icon: Mail,
+      label: 'Email',
+      value: data.email,
+      href: `mailto:${data.email}`,
+      color: theme.primaryColor,
+    });
+  }
+
+  if (data.phone) {
+    contactInfoItems.push({
+      icon: Phone,
+      label: 'Phone',
+      value: data.phone,
+      href: `tel:${data.phone}`,
+      color: theme.accentColor,
+    });
+  }
+
+  if (data.location) {
+    contactInfoItems.push({
+      icon: MapPin,
+      label: 'Location',
+      value: data.location,
+      href: null,
+      color: theme.secondaryColor,
+    });
+  }
 
   return (
     <section
@@ -54,7 +86,8 @@ export function ContactSection({ section, isEditing }: Props) {
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
-        fontFamily: theme.fontFamily
+        fontFamily: theme.fontFamily,
+        ...themeStyles,
       }}
     >
       {/* Background effects */}
@@ -96,70 +129,34 @@ export function ContactSection({ section, isEditing }: Props) {
 
             {/* Contact Details */}
             <div className="space-y-4">
-              {data.email && (
-                <a
-                  href={`mailto:${data.email}`}
-                  className="flex items-center gap-4 p-4 glass hover:bg-white/10 transition-colors group"
-                  style={{ borderRadius: radius }}
-                >
-                  <div
-                    className="p-3 transition-colors"
-                    style={{
-                      backgroundColor: `${theme.primaryColor}20`,
-                      color: theme.primaryColor,
-                      borderRadius: radius
-                    }}
+              {contactInfoItems.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={index}
+                    href={item.href || '#'}
+                    className="flex items-center gap-4 p-4 glass hover:bg-white/10 transition-colors group"
+                    style={{ borderRadius: radius }}
                   >
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm" style={{ color: `${theme.textColor}80` }}>Email</p>
-                    <p style={{ color: theme.textColor }}>{data.email}</p>
-                  </div>
-                </a>
-              )}
-
-              {data.phone && (
-                <a
-                  href={`tel:${data.phone}`}
-                  className="flex items-center gap-4 p-4 glass hover:bg-white/10 transition-colors group"
-                  style={{ borderRadius: radius }}
-                >
-                  <div
-                    className="p-3 transition-colors"
-                    style={{
-                      backgroundColor: `${theme.accentColor}20`,
-                      color: theme.accentColor,
-                      borderRadius: radius
-                    }}
-                  >
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm" style={{ color: `${theme.textColor}80` }}>Phone</p>
-                    <p style={{ color: theme.textColor }}>{data.phone}</p>
-                  </div>
-                </a>
-              )}
-
-              {data.location && (
-                <div className="flex items-center gap-4 p-4 glass" style={{ borderRadius: radius }}>
-                  <div
-                    className="p-3"
-                    style={{
-                      backgroundColor: `${theme.secondaryColor}20`,
-                      color: theme.secondaryColor,
-                      borderRadius: radius
-                    }}
-                  >
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm" style={{ color: `${theme.textColor}80` }}>Location</p>
-                    <p style={{ color: theme.textColor }}>{data.location}</p>
-                  </div>
-                </div>
-              )}
+                    <div
+                      className="p-3 transition-colors"
+                      style={{
+                        backgroundColor: `${item.color}20`,
+                        color: item.color,
+                        borderRadius: radius,
+                      }}
+                    >
+                      <Icon />
+                    </div>
+                    <div>
+                      <p className="text-sm" style={{ color: `${theme.textColor}80` }}>
+                        {item.label}
+                      </p>
+                      <p style={{ color: theme.textColor }}>{item.value}</p>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
 
             {/* Social Links */}
@@ -194,56 +191,66 @@ export function ContactSection({ section, isEditing }: Props) {
           {/* Contact Form */}
           {data.showForm && (
             <div className="glass p-8" style={{ borderRadius: largeRadius }}>
-              <h3 className="text-2xl font-bold mb-6" style={{ color: theme.textColor }}>Send a Message</h3>
+              <h3 className="text-2xl font-bold mb-6" style={{ color: theme.textColor }}>
+                Send a Message
+              </h3>
               <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                 <div>
-                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>Name</label>
+                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>
+                    Name
+                  </label>
                   <input
                     type="text"
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:border-transparent transition-all"
                     style={{
                       borderRadius: radius,
                       color: theme.textColor,
-                      outlineColor: theme.primaryColor
+                      outlineColor: theme.primaryColor,
                     }}
                     placeholder="Your name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>Email</label>
+                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>
+                    Email
+                  </label>
                   <input
                     type="email"
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:border-transparent transition-all"
                     style={{
                       borderRadius: radius,
-                      color: theme.textColor
+                      color: theme.textColor,
                     }}
                     placeholder="your.email@example.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>Subject</label>
+                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>
+                    Subject
+                  </label>
                   <input
                     type="text"
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:border-transparent transition-all"
                     style={{
                       borderRadius: radius,
-                      color: theme.textColor
+                      color: theme.textColor,
                     }}
                     placeholder="What's this about?"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>Message</label>
+                  <label className="block text-sm mb-2" style={{ color: `${theme.textColor}aa` }}>
+                    Message
+                  </label>
                   <textarea
                     rows={4}
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none"
                     style={{
                       borderRadius: radius,
-                      color: theme.textColor
+                      color: theme.textColor,
                     }}
                     placeholder="Your message..."
                   />
@@ -254,7 +261,7 @@ export function ContactSection({ section, isEditing }: Props) {
                   className="w-full py-4 text-white font-semibold hover:opacity-90 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group"
                   style={{
                     background: `linear-gradient(to right, ${theme.primaryColor}, ${theme.accentColor})`,
-                    borderRadius: radius
+                    borderRadius: radius,
                   }}
                 >
                   <span>Send Message</span>

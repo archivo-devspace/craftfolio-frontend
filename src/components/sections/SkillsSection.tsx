@@ -1,8 +1,9 @@
 'use client';
 
 import { SkillsSection as SkillsSectionType } from '@/types/portfolio';
-import { usePortfolioStore } from '@/store/portfolioStore';
-import { Code, Plus } from 'lucide-react';
+import { useTheme, displayStyleOptions } from '@/hooks';
+import { Code } from 'lucide-react';
+import { SectionEmptyState } from '@/components/ui';
 
 interface Props {
   section: SkillsSectionType;
@@ -11,18 +12,7 @@ interface Props {
 
 export function SkillsSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { portfolio } = usePortfolioStore();
-  const { theme } = portfolio;
-
-  // Map border radius to actual values
-  const borderRadiusMap = {
-    none: '0px',
-    small: '4px',
-    medium: '8px',
-    large: '16px',
-  };
-  const radius = borderRadiusMap[theme.borderRadius] || '8px';
-  const largeRadius = theme.borderRadius === 'none' ? '0px' : theme.borderRadius === 'small' ? '8px' : theme.borderRadius === 'medium' ? '16px' : '24px';
+  const { theme, radius, largeRadius, themeStyles } = useTheme();
 
   // Group skills by category
   const groupedSkills = data.skills.reduce((acc, skill) => {
@@ -45,7 +35,7 @@ export function SkillsSection({ section, isEditing }: Props) {
           className="h-full rounded-full transition-all duration-1000 ease-out"
           style={{
             width: `${skill.level}%`,
-            background: `linear-gradient(to right, ${theme.primaryColor}, ${theme.accentColor})`
+            background: `linear-gradient(to right, ${theme.primaryColor}, ${theme.accentColor})`,
           }}
         />
       </div>
@@ -116,7 +106,10 @@ export function SkillsSection({ section, isEditing }: Props) {
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {Object.entries(groupedSkills).map(([category, skills]) => (
             <div key={category} className="glass p-6" style={{ borderRadius: largeRadius }}>
-              <h3 className="text-lg font-semibold mb-6 flex items-center gap-2" style={{ color: theme.textColor }}>
+              <h3
+                className="text-lg font-semibold mb-6 flex items-center gap-2"
+                style={{ color: theme.textColor }}
+              >
                 <Code className="w-5 h-5" style={{ color: theme.primaryColor }} />
                 {category}
               </h3>
@@ -134,8 +127,11 @@ export function SkillsSection({ section, isEditing }: Props) {
         <div className="max-w-4xl mx-auto">
           {Object.entries(groupedSkills).map(([category, skills]) => (
             <div key={category} className="mb-8 last:mb-0">
-              <h3 className="text-lg font-semibold text-cloud mb-4 flex items-center gap-2">
-                <Code className="w-5 h-5" style={{ color: theme.primaryColor }} />
+              <h3
+                className="text-lg font-semibold text-cloud mb-4 flex items-center gap-2"
+                style={{ color: theme.primaryColor }}
+              >
+                <Code className="w-5 h-5" />
                 {category}
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -152,8 +148,11 @@ export function SkillsSection({ section, isEditing }: Props) {
       <div className="max-w-5xl mx-auto">
         {Object.entries(groupedSkills).map(([category, skills]) => (
           <div key={category} className="mb-12 last:mb-0">
-            <h3 className="text-lg font-semibold text-cloud mb-6 flex items-center gap-2">
-              <Code className="w-5 h-5" style={{ color: theme.primaryColor }} />
+            <h3
+              className="text-lg font-semibold text-cloud mb-6 flex items-center gap-2"
+              style={{ color: theme.primaryColor }}
+            >
+              <Code className="w-5 h-5" />
               {category}
             </h3>
             <div className="flex flex-wrap justify-center gap-8">
@@ -171,7 +170,8 @@ export function SkillsSection({ section, isEditing }: Props) {
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
-        fontFamily: theme.fontFamily
+        fontFamily: theme.fontFamily,
+        ...themeStyles,
       }}
     >
       {/* Background decoration */}
@@ -199,20 +199,11 @@ export function SkillsSection({ section, isEditing }: Props) {
         {data.skills && data.skills.length > 0 ? (
           renderSkills()
         ) : (
-          <div className="text-center py-20">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full glass mb-6">
-              <Code className="w-10 h-10 text-slate-light" />
-            </div>
-            <p className="text-fog/50 mb-4">
-              {isEditing ? 'No skills yet. Add your skills!' : 'No skills to display'}
-            </p>
-            {isEditing && (
-              <button className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">
-                <Plus className="w-4 h-4" />
-                <span>Add Skill</span>
-              </button>
-            )}
-          </div>
+          <SectionEmptyState
+            icon={<Code className="w-10 h-10 text-slate-light" />}
+            title={isEditing ? 'No skills yet. Add your skills!' : 'No skills to display'}
+            isEditing={isEditing}
+          />
         )}
       </div>
     </section>

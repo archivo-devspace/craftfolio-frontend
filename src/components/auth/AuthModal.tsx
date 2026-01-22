@@ -31,6 +31,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
         id: latestPortfolio.id,
         name: latestPortfolio.name,
         slug: latestPortfolio.slug,
+        published: latestPortfolio.published,
         theme: latestPortfolio.theme as unknown as import('@/types/portfolio').PortfolioTheme,
         sections: latestPortfolio.sections as unknown as import('@/types/portfolio').Section[],
       });

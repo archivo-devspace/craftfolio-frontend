@@ -1,0 +1,68 @@
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { SectionType } from '@/types/portfolio';
+import { Layout, User, FolderOpen, Code, Briefcase, Mail, GripVertical, Trash2, Eye, EyeOff, ChevronRight } from 'lucide-react';
+
+const sectionTypes: { type: SectionType; label: string; icon: typeof Layout }[] = [
+  { type: 'hero', label: 'Hero', icon: Layout },
+  { type: 'about', label: 'About', icon: User },
+  { type: 'projects', label: 'Projects', icon: FolderOpen },
+  { type: 'skills', label: 'Skills', icon: Code },
+  { type: 'experience', label: 'Experience', icon: Briefcase },
+  { type: 'contact', label: 'Contact', icon: Mail },
+];
+
+interface SortableSidebarItemProps {
+  section: { id: string; type: SectionType; visible: boolean };
+  index: number;
+  onSelect: () => void;
+  onRemove: () => void;
+  onToggleVisibility: () => void;
+}
+
+export function SortableSidebarItem({ section, index, onSelect, onRemove, onToggleVisibility }: SortableSidebarItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  const sectionInfo = sectionTypes.find(s => s.type === section.type);
+  const Icon = sectionInfo?.icon || Layout;
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`flex items-center gap-2 p-3 glass rounded-lg transition-colors ${!section.visible ? 'opacity-50 bg-white/5' : ''}`}
+    >
+      <button
+        {...attributes}
+        {...listeners}
+        className="p-1 cursor-grab active:cursor-grabbing hover:bg-white/10 rounded"
+        disabled={!section.visible}
+      >
+        <GripVertical className={`w-4 h-4 ${section.visible ? 'text-fog/50' : 'text-fog/30'}`} />
+      </button>
+      <span className="text-fog/50 text-sm w-4">{index + 1}</span>
+      <Icon className={`w-4 h-4 ${section.visible ? 'text-electric-violet' : 'text-fog/30'}`} />
+      <span
+        className={`flex-1 text-sm ${section.visible ? 'text-fog/80 cursor-pointer hover:text-fog' : 'text-fog/40 cursor-not-allowed'}`}
+        onClick={section.visible ? onSelect : undefined}
+      >
+        {sectionInfo?.label || section.type}
+      </span>
+      <button onClick={onToggleVisibility} className="p-1 hover:bg-white/10 rounded transition-opacity" title={section.visible ? 'Hide section' : 'Show section'}>
+        {section.visible ? <Eye className="w-4 h-4 text-fog/50" /> : <EyeOff className="w-4 h-4 text-fog/30" />}
+      </button>
+      <button onClick={onRemove} className="p-1 hover:bg-red-500/20 rounded text-red-400 transition-opacity">
+        <Trash2 className="w-4 h-4" />
+      </button>
+      <button onClick={onSelect} className={`p-1 hover:bg-white/10 rounded ${section.visible ? 'text-fog/30 cursor-pointer' : 'text-fog/20'}`}>
+        <ChevronRight className="w-4 h-4 text-fog/50" />
+      </button>
+    </div>
+  );
+}

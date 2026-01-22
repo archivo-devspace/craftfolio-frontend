@@ -1,7 +1,7 @@
 'use client';
 
 import { AboutSection as AboutSectionType } from '@/types/portfolio';
-import { usePortfolioStore } from '@/store/portfolioStore';
+import { useTheme } from '@/hooks';
 import { User, Sparkles, Star } from 'lucide-react';
 
 interface Props {
@@ -11,18 +11,7 @@ interface Props {
 
 export function AboutSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { portfolio } = usePortfolioStore();
-  const { theme } = portfolio;
-
-  // Map border radius to actual values
-  const borderRadiusMap = {
-    none: '0px',
-    small: '4px',
-    medium: '8px',
-    large: '16px',
-  };
-  const radius = borderRadiusMap[theme.borderRadius] || '8px';
-  const largeRadius = theme.borderRadius === 'none' ? '0px' : theme.borderRadius === 'small' ? '8px' : theme.borderRadius === 'medium' ? '16px' : '24px';
+  const { theme, radius, largeRadius, themeStyles } = useTheme();
 
   return (
     <section
@@ -30,7 +19,8 @@ export function AboutSection({ section, isEditing }: Props) {
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
-        fontFamily: theme.fontFamily
+        fontFamily: theme.fontFamily,
+        ...themeStyles,
       }}
     >
       {/* Background decoration */}
@@ -53,7 +43,7 @@ export function AboutSection({ section, isEditing }: Props) {
                 className="absolute -inset-4 blur-xl"
                 style={{
                   background: `linear-gradient(to bottom right, ${theme.primaryColor}30, ${theme.accentColor}30)`,
-                  borderRadius: largeRadius
+                  borderRadius: largeRadius,
                 }}
               />
 
@@ -78,10 +68,16 @@ export function AboutSection({ section, isEditing }: Props) {
               </div>
 
               {/* Floating badges */}
-              <div className="absolute -top-6 -right-6 glass p-4 animate-float" style={{ borderRadius: radius }}>
+              <div
+                className="absolute -top-6 -right-6 glass p-4 animate-float"
+                style={{ borderRadius: radius }}
+              >
                 <Sparkles className="w-6 h-6" style={{ color: theme.primaryColor }} />
               </div>
-              <div className="absolute -bottom-6 -left-6 glass p-4 animate-float" style={{ animationDelay: '1s', borderRadius: radius }}>
+              <div
+                className="absolute -bottom-6 -left-6 glass p-4 animate-float"
+                style={{ animationDelay: '1s', borderRadius: radius }}
+              >
                 <Star className="w-6 h-6" style={{ color: theme.accentColor }} />
               </div>
             </div>
@@ -113,44 +109,52 @@ export function AboutSection({ section, isEditing }: Props) {
                 ))}
               </div>
             )}
-
-
           </div>
         </div>
-        {/* Stats or additional info */}
+
+        {/* Stats */}
         <div className="mt-10 grid grid-cols-3 gap-6">
-          <div className="text-center glass p-4" style={{ borderRadius: radius }}>
+          <div
+            className="text-center glass p-4"
+            style={{ borderRadius: radius }}
+          >
             <div
               className="text-3xl font-bold"
-              style={{
-                color: theme.textColor
-              }}
+              style={{ color: theme.textColor }}
             >
               {data.yearsExperience || '5+'}
             </div>
-            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>Years Exp.</div>
+            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>
+              Years Exp.
+            </div>
           </div>
-          <div className="text-center glass p-4" style={{ borderRadius: radius }}>
+          <div
+            className="text-center glass p-4"
+            style={{ borderRadius: radius }}
+          >
             <div
               className="text-3xl font-bold"
-              style={{
-                color: theme.textColor
-              }}
+              style={{ color: theme.textColor }}
             >
               {data.projectsCount || '50+'}
             </div>
-            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>Projects</div>
+            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>
+              Projects
+            </div>
           </div>
-          <div className="text-center glass p-4" style={{ borderRadius: radius }}>
+          <div
+            className="text-center glass p-4"
+            style={{ borderRadius: radius }}
+          >
             <div
               className="text-3xl font-bold"
-              style={{
-                color: theme.textColor
-              }}
+              style={{ color: theme.textColor }}
             >
               {data.clientsCount || '30+'}
             </div>
-            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>Clients</div>
+            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>
+              Clients
+            </div>
           </div>
         </div>
       </div>

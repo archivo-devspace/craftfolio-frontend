@@ -1,7 +1,7 @@
 'use client';
 
 import { HeroSection as HeroSectionType } from '@/types/portfolio';
-import { usePortfolioStore } from '@/store/portfolioStore';
+import { useTheme, useScrollToSection } from '@/hooks';
 import { Sparkles } from 'lucide-react';
 
 interface Props {
@@ -11,21 +11,12 @@ interface Props {
 
 export function HeroSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { portfolio } = usePortfolioStore();
-  const { theme } = portfolio;
-
-  // Map border radius to actual values
-  const borderRadiusMap = {
-    none: '0px',
-    small: '4px',
-    medium: '8px',
-    large: '16px',
-  };
-  const radius = borderRadiusMap[theme.borderRadius] || '8px';
+  const { theme, radius, themeStyles } = useTheme();
+  const scrollToProjects = useScrollToSection('projects');
+  const scrollToContact = useScrollToSection('contact');
 
   const getBackgroundStyle = () => {
     if (data.backgroundStyle === 'gradient') {
-      // Use theme colors for gradient if gradientColors uses defaults
       const colors = data.gradientColors.length > 0
         ? data.gradientColors
         : [theme.primaryColor, theme.secondaryColor, theme.accentColor];
@@ -42,7 +33,8 @@ export function HeroSection({ section, isEditing }: Props) {
       style={{
         ...getBackgroundStyle(),
         fontFamily: theme.fontFamily,
-        color: theme.textColor
+        color: theme.textColor,
+        ...themeStyles,
       }}
     >
       {/* Animated background elements */}
@@ -65,7 +57,10 @@ export function HeroSection({ section, isEditing }: Props) {
         {/* Avatar */}
         {data.avatarUrl ? (
           <div className="mb-8 inline-block">
-            <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-white/20 shadow-2xl">
+            <div
+              className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-white/20 shadow-2xl"
+              style={{ borderRadius: radius }}
+            >
               <img
                 src={data.avatarUrl}
                 alt={data.name}
@@ -74,7 +69,10 @@ export function HeroSection({ section, isEditing }: Props) {
             </div>
           </div>
         ) : (
-          <div className="mb-8 inline-flex items-center justify-center w-32 h-32 rounded-full bg-white/10 ring-4 ring-white/20">
+          <div
+            className="mb-8 inline-flex items-center justify-center w-32 h-32 rounded-full bg-white/10 ring-4 ring-white/20"
+            style={{ borderRadius: radius }}
+          >
             <Sparkles className="w-12 h-12 text-white/60" />
           </div>
         )}
@@ -99,24 +97,14 @@ export function HeroSection({ section, isEditing }: Props) {
           <button
             className="px-8 py-3 bg-white text-gray-900 font-semibold hover:bg-white/90 transition-all hover:scale-105 shadow-lg"
             style={{ borderRadius: radius }}
-            onClick={() => {
-              const projectsSection = document.querySelector('[data-section-type="projects"]');
-              if (projectsSection) {
-                projectsSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+            onClick={scrollToProjects}
           >
             View Work
           </button>
           <button
             className="px-8 py-3 bg-white/10 text-white font-semibold hover:bg-white/20 transition-all border border-white/20"
             style={{ borderRadius: radius }}
-            onClick={() => {
-              const contactSection = document.querySelector('[data-section-type="contact"]');
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+            onClick={scrollToContact}
           >
             Contact Me
           </button>
@@ -125,7 +113,10 @@ export function HeroSection({ section, isEditing }: Props) {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
+        <div
+          className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2"
+          style={{ borderRadius: radius }}
+        >
           <div className="w-1 h-2 bg-white/50 rounded-full" />
         </div>
       </div>

@@ -1,8 +1,9 @@
 'use client';
 
 import { ExperienceSection as ExperienceSectionType } from '@/types/portfolio';
-import { usePortfolioStore } from '@/store/portfolioStore';
-import { Briefcase, Plus, Calendar } from 'lucide-react';
+import { useTheme } from '@/hooks';
+import { Briefcase, Calendar } from 'lucide-react';
+import { SectionEmptyState } from '@/components/ui';
 
 interface Props {
   section: ExperienceSectionType;
@@ -11,18 +12,7 @@ interface Props {
 
 export function ExperienceSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { portfolio } = usePortfolioStore();
-  const { theme } = portfolio;
-
-  // Map border radius to actual values
-  const borderRadiusMap = {
-    none: '0px',
-    small: '4px',
-    medium: '8px',
-    large: '16px',
-  };
-  const radius = borderRadiusMap[theme.borderRadius] || '8px';
-  const largeRadius = theme.borderRadius === 'none' ? '0px' : theme.borderRadius === 'small' ? '8px' : theme.borderRadius === 'medium' ? '16px' : '24px';
+  const { theme, largeRadius, themeStyles } = useTheme();
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return '';
@@ -36,7 +26,8 @@ export function ExperienceSection({ section, isEditing }: Props) {
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
-        fontFamily: theme.fontFamily
+        fontFamily: theme.fontFamily,
+        ...themeStyles,
       }}
     >
       {/* Background decoration */}
@@ -71,8 +62,7 @@ export function ExperienceSection({ section, isEditing }: Props) {
             {data.experiences.map((exp, index) => (
               <div
                 key={exp.id}
-                className={`relative mb-12 last:mb-0 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-auto'
-                  }`}
+                className={`relative mb-12 last:mb-0 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-auto'}`}
               >
                 {/* Timeline dot */}
                 <div
@@ -87,8 +77,7 @@ export function ExperienceSection({ section, isEditing }: Props) {
 
                 {/* Content card */}
                 <div
-                  className={`ml-8 md:ml-0 glass p-6 hover:bg-white/10 transition-colors ${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'
-                    }`}
+                  className={`ml-8 md:ml-0 glass p-6 hover:bg-white/10 transition-colors ${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}`}
                   style={{ borderRadius: largeRadius }}
                 >
                   {/* Company & Position */}
@@ -98,8 +87,7 @@ export function ExperienceSection({ section, isEditing }: Props) {
                   </div>
 
                   {/* Date range */}
-                  <div className={`flex items-center gap-2 text-fog/50 text-sm mb-4 ${index % 2 === 0 ? 'md:justify-end' : ''
-                    }`}>
+                  <div className={`flex items-center gap-2 text-fog/50 text-sm mb-4 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
                     <Calendar className="w-4 h-4" />
                     <span>
                       {formatDate(exp.startDate)} — {exp.current ? 'Present' : formatDate(exp.endDate || '')}
@@ -117,8 +105,7 @@ export function ExperienceSection({ section, isEditing }: Props) {
                       {exp.achievements.map((achievement, idx) => (
                         <li
                           key={idx}
-                          className={`text-sm text-fog/60 flex items-start gap-2 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''
-                            }`}
+                          className={`text-sm text-fog/60 flex items-start gap-2 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                         >
                           <span className="mt-1" style={{ color: theme.accentColor }}>•</span>
                           <span>{achievement}</span>
@@ -131,20 +118,12 @@ export function ExperienceSection({ section, isEditing }: Props) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full glass mb-6">
-              <Briefcase className="w-10 h-10 text-slate-light" />
-            </div>
-            <p className="text-fog/50 mb-4">
-              {isEditing ? 'No experience yet. Add your work history!' : 'No experience to display'}
-            </p>
-            {isEditing && (
-              <button className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">
-                <Plus className="w-4 h-4" />
-                <span>Add Experience</span>
-              </button>
-            )}
-          </div>
+          <SectionEmptyState
+            icon={<Briefcase className="w-10 h-10 text-slate-light" />}
+            title={isEditing ? 'No experience yet. Add your work history!' : 'No experience to display'}
+            isEditing={isEditing}
+            actionLabel="Add Experience"
+          />
         )}
       </div>
     </section>
