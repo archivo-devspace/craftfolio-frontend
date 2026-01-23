@@ -93,10 +93,10 @@ export function CanvasToolbar({
           disabled={saveState.isSaving}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium text-sm ${
             saveState.status === 'success'
-              ? 'bg-emerald-glow text-white'
+              ? 'bg-primary text-black'
               : saveState.status === 'error'
                 ? 'bg-red-500 text-white'
-                : 'bg-electric-violet text-white hover:bg-electric-violet/90'
+                : 'bg-primary text-black hover:bg-primary/90'
           }`}
         >
           {getSaveButtonContent()}
@@ -108,10 +108,10 @@ export function CanvasToolbar({
           disabled={publishState.isPublishing}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium text-sm ${
             publishState.status === 'success'
-              ? 'bg-emerald-glow text-white'
+              ? 'bg-primary text-black'
               : publishState.status === 'error'
                 ? 'bg-red-500 text-white'
-                : 'bg-electric-violet text-white hover:bg-electric-violet/90'
+                : 'bg-primary text-black hover:bg-primary/90'
           }`}
         >
           {getPublishButtonContent()}

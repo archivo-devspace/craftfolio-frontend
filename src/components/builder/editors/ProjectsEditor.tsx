@@ -83,28 +83,28 @@ export function ProjectsEditor({ section, onChange }: Props) {
                   value={project.title}
                   onChange={(e) => updateProject(project.id, 'title', e.target.value)}
                   placeholder="Project Title"
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <textarea
                   value={project.description}
                   onChange={(e) => updateProject(project.id, 'description', e.target.value)}
                   placeholder="Description"
                   rows={2}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm resize-none"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm resize-none"
                 />
                 <input
                   type="text"
                   value={project.imageUrl}
                   onChange={(e) => updateProject(project.id, 'imageUrl', e.target.value)}
                   placeholder="Image URL"
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <input
                   type="text"
                   value={project.tags.join(', ')}
                   onChange={(e) => updateProject(project.id, 'tags', e.target.value.split(',').map(t => t.trim()).filter(Boolean))}
                   placeholder="Tags (comma separated)"
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
@@ -112,14 +112,14 @@ export function ProjectsEditor({ section, onChange }: Props) {
                     value={project.liveUrl}
                     onChange={(e) => updateProject(project.id, 'liveUrl', e.target.value)}
                     placeholder="Live URL"
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                   />
                   <input
                     type="text"
                     value={project.githubUrl}
                     onChange={(e) => updateProject(project.id, 'githubUrl', e.target.value)}
                     placeholder="GitHub URL"
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                   />
                 </div>
               </div>

@@ -2,7 +2,7 @@
 
 import { AboutSection as AboutSectionType } from '@/types/portfolio';
 import { useTheme } from '@/hooks';
-import { User, Sparkles, Star } from 'lucide-react';
+import { User } from 'lucide-react';
 
 interface Props {
   section: AboutSectionType;
@@ -11,11 +11,11 @@ interface Props {
 
 export function AboutSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { theme, radius, largeRadius, themeStyles } = useTheme();
+  const { theme, radius, themeStyles } = useTheme();
 
   return (
     <section
-      className="py-24 px-4 relative overflow-hidden"
+      className="py-24 px-6 relative"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -23,138 +23,136 @@ export function AboutSection({ section, isEditing }: Props) {
         ...themeStyles,
       }}
     >
-      {/* Background decoration */}
+      {/* Background Accent */}
       <div
-        className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl"
-        style={{ backgroundColor: `${theme.primaryColor}10` }}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl"
-        style={{ backgroundColor: `${theme.accentColor}10` }}
+        className="absolute top-0 right-0 w-[500px] h-[500px] opacity-5 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 70%)`,
+        }}
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div>
           {/* Image Column */}
-          <div className="order-2 md:order-1">
+          {/* <div className="order-2 md:order-1">
             <div className="relative">
-              {/* Decorative frame */}
               <div
-                className="absolute -inset-4 blur-xl"
+                className="aspect-square flex items-center justify-center"
                 style={{
-                  background: `linear-gradient(to bottom right, ${theme.primaryColor}30, ${theme.accentColor}30)`,
-                  borderRadius: largeRadius,
+                  backgroundColor: `${theme.primaryColor}10`,
+                  borderRadius: radius,
                 }}
-              />
-
-              <div
-                className="relative glass p-4 aspect-square flex items-center justify-center overflow-hidden"
-                style={{ borderRadius: largeRadius }}
               >
                 {data.imageUrl ? (
                   <img
                     src={data.imageUrl}
                     alt="About"
-                    className="w-full h-full object-cover rounded-xl"
+                    className="w-full h-full object-cover"
+                    style={{ borderRadius: radius }}
                   />
                 ) : (
-                  <div className="text-center">
-                    <User className="w-24 h-24 text-slate-light mx-auto mb-4" />
-                    <p className="text-fog/50 text-sm">
+                  <div className="text-center p-8">
+                    <User
+                      className="w-16 h-16 mx-auto mb-4"
+                      style={{ color: theme.primaryColor }}
+                    />
+                    <p style={{ color: `${theme.textColor}60` }}>
                       {isEditing ? 'Add your photo' : ''}
                     </p>
                   </div>
                 )}
               </div>
-
-              {/* Floating badges */}
-              <div
-                className="absolute -top-6 -right-6 glass p-4 animate-float"
-                style={{ borderRadius: radius }}
-              >
-                <Sparkles className="w-6 h-6" style={{ color: theme.primaryColor }} />
-              </div>
-              <div
-                className="absolute -bottom-6 -left-6 glass p-4 animate-float"
-                style={{ animationDelay: '1s', borderRadius: radius }}
-              >
-                <Star className="w-6 h-6" style={{ color: theme.accentColor }} />
-              </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Content Column */}
-          <div className="order-1 md:order-2">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+          <div className="order-1 md:order-2 ">
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-6"
+              style={{ color: theme.textColor }}
+            >
               {data.title || 'About Me'}
             </h2>
 
-            <div className="prose prose-invert prose-lg max-w-none">
-              <p className="text-fog/80 leading-relaxed whitespace-pre-wrap">
-                {data.description || (isEditing ? 'Tell your story here...' : '')}
-              </p>
-            </div>
+            <p
+              className="leading-relaxed mb-8"
+              style={{ color: `${theme.textColor}80` }}
+            >
+              {data.description || (isEditing ? 'Tell your story here...' : '')}
+            </p>
 
             {/* Highlights */}
             {data.highlights && data.highlights.length > 0 && (
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {data.highlights.map((highlight, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 glass text-sm hover:bg-white/10 transition-colors"
-                    style={{ borderRadius: radius, color: theme.textColor }}
+                    className="px-4 py-2 font-medium"
+                    style={{
+                      backgroundColor: `${theme.primaryColor}15`,
+                      color: theme.primaryColor,
+                      borderRadius: radius,
+                    }}
                   >
                     {highlight}
                   </span>
                 ))}
               </div>
             )}
-          </div>
-        </div>
 
-        {/* Stats */}
-        <div className="mt-10 grid grid-cols-3 gap-6">
-          <div
-            className="text-center glass p-4"
-            style={{ borderRadius: radius }}
-          >
-            <div
-              className="text-3xl font-bold"
-              style={{ color: theme.textColor }}
-            >
-              {data.yearsExperience || '5+'}
-            </div>
-            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>
-              Years Exp.
-            </div>
-          </div>
-          <div
-            className="text-center glass p-4"
-            style={{ borderRadius: radius }}
-          >
-            <div
-              className="text-3xl font-bold"
-              style={{ color: theme.textColor }}
-            >
-              {data.projectsCount || '50+'}
-            </div>
-            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>
-              Projects
-            </div>
-          </div>
-          <div
-            className="text-center glass p-4"
-            style={{ borderRadius: radius }}
-          >
-            <div
-              className="text-3xl font-bold"
-              style={{ color: theme.textColor }}
-            >
-              {data.clientsCount || '30+'}
-            </div>
-            <div className="text-sm mt-1" style={{ color: `${theme.textColor}80` }}>
-              Clients
-            </div>
+            {/* Stats */}
+            {(data.yearsExperience || data.projectsCount || data.clientsCount) && (
+              <div className="grid grid-cols-3 gap-4 mt-10">
+                {data.yearsExperience && (
+                  <div className="text-center p-4">
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: theme.primaryColor }}
+                    >
+                      {data.yearsExperience}
+                    </div>
+                    <div
+                      className="text-sm mt-1"
+                      style={{ color: `${theme.textColor}60` }}
+                    >
+                      Years Exp.
+                    </div>
+                  </div>
+                )}
+                {data.projectsCount && (
+                  <div className="text-center p-4">
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: theme.primaryColor }}
+                    >
+                      {data.projectsCount}
+                    </div>
+                    <div
+                      className="text-sm mt-1"
+                      style={{ color: `${theme.textColor}60` }}
+                    >
+                      Projects
+                    </div>
+                  </div>
+                )}
+                {data.clientsCount && (
+                  <div className="text-center p-4">
+                    <div
+                      className="text-2xl font-bold"
+                      style={{ color: theme.primaryColor }}
+                    >
+                      {data.clientsCount}
+                    </div>
+                    <div
+                      className="text-sm mt-1"
+                      style={{ color: `${theme.textColor}60` }}
+                    >
+                      Clients
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

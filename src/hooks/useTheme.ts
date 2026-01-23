@@ -130,9 +130,9 @@ export const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = 
   {
     name: 'Midnight',
     theme: {
-      primaryColor: '#6366f1',
-      secondaryColor: '#8b5cf6',
-      accentColor: '#f472b6',
+      primaryColor: '#28e98c',
+      secondaryColor: '#28e98c',
+      accentColor: '#28e98c',
       backgroundColor: '#0f172a',
       textColor: '#f8fafc',
     },
@@ -171,7 +171,7 @@ export const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = 
     name: 'Rose',
     theme: {
       primaryColor: '#f43f5e',
-      secondaryColor: '#ec4899',
+      secondaryColor: '#28e98c',
       accentColor: '#fb7185',
       backgroundColor: '#1f1218',
       textColor: '#fce7f3',

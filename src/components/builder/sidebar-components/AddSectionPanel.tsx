@@ -40,7 +40,7 @@ export function AddSectionPanel({ isOpen, existingSectionTypes, onAddSection, on
               isAdded ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'
             }`}
           >
-            <Icon className="w-4 h-4 text-electric-violet" />
+            <Icon className="w-4 h-4 text-primary" />
             <span className="text-sm text-fog/80">
               {sectionType.label}
               {isAdded && <span className="text-xs ml-2 opacity-60">(Added)</span>}

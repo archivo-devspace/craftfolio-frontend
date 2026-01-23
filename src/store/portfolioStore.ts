@@ -31,9 +31,9 @@ interface PortfolioState {
 }
 
 const defaultTheme: PortfolioTheme = {
-  primaryColor: '#6366f1',
-  secondaryColor: '#8b5cf6',
-  accentColor: '#f472b6',
+  primaryColor: '#28e98c',
+  secondaryColor: '#28e98c',
+  accentColor: '#28e98c',
   backgroundColor: '#0f172a',
   textColor: '#f8fafc',
   fontFamily: 'Inter',

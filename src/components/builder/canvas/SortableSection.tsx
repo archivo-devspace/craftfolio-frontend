@@ -2,20 +2,7 @@
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Section, SectionType } from '@/types/portfolio';
-import {
-  GripVertical,
-  Eye,
-  EyeOff,
-  Trash2,
-  Settings,
-  Layout,
-  User,
-  FolderOpen,
-  Code,
-  Briefcase,
-  Mail
-} from 'lucide-react';
+import { Section } from '@/types/portfolio';
 import { usePortfolioStore } from '@/store/portfolioStore';
 import {
   HeroSection,
@@ -30,36 +17,15 @@ interface Props {
   section: Section;
 }
 
-const sectionIcons: Record<SectionType, typeof Layout> = {
-  hero: Layout,
-  about: User,
-  projects: FolderOpen,
-  skills: Code,
-  experience: Briefcase,
-  contact: Mail,
-};
-
-const sectionLabels: Record<SectionType, string> = {
-  hero: 'Hero',
-  about: 'About',
-  projects: 'Projects',
-  skills: 'Skills',
-  experience: 'Experience',
-  contact: 'Contact',
-};
 
 export function SortableSection({ section }: Props) {
   const {
     selectedSectionId,
     selectSection,
-    toggleSectionVisibility,
-    removeSection,
     previewMode
   } = usePortfolioStore();
 
   const {
-    attributes,
-    listeners,
     setNodeRef,
     transform,
     transition,
@@ -72,7 +38,6 @@ export function SortableSection({ section }: Props) {
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const Icon = sectionIcons[section.type];
   const isSelected = selectedSectionId === section.id;
 
   const renderSection = () => {
@@ -108,7 +73,7 @@ export function SortableSection({ section }: Props) {
       {/* Section content with selection indicator */}
       <div
         onClick={() => selectSection(section.id)}
-        className={`cursor-pointer transition-all ${isSelected ? 'ring-2 ring-electric-violet ring-offset-2 ring-offset-obsidian' : ''
+        className={`cursor-pointer transition-all ${isSelected ? 'ring-2 ring-primary ring-offset-2 ring-offset-obsidian' : ''
           }`}
       >
         {renderSection()}

@@ -10,7 +10,7 @@ export function LoadingScreen({ message = 'Loading...' }: LoadingScreenProps) {
   return (
     <main className="h-screen flex items-center justify-center bg-obsidian">
       <div className="text-center">
-        <Loader2 className="w-10 h-10 animate-spin text-electric-violet mx-auto mb-4" />
+        <Loader2 className="w-10 h-10 animate-spin text-primary mx-auto mb-4" />
         <p className="text-fog/60">{message}</p>
       </div>
     </main>
@@ -31,7 +31,7 @@ export function ErrorScreen({ message, onRetry }: ErrorScreenProps) {
         {onRetry && (
           <button
             onClick={onRetry}
-            className="px-4 py-2 bg-electric-violet text-white rounded-lg hover:bg-electric-violet/90 transition-colors"
+            className="px-4 py-2 bg-primary text-black rounded-lg hover:bg-primary/90 transition-colors"
           >
             Retry
           </button>

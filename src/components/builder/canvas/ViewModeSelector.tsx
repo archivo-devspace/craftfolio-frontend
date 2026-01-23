@@ -13,7 +13,7 @@ export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
       <button
         onClick={() => onViewModeChange('desktop')}
         className={`p-2 rounded transition-colors ${
-          viewMode === 'desktop' ? 'bg-electric-violet text-white' : 'hover:bg-white/10'
+          viewMode === 'desktop' ? 'bg-primary text-black' : 'hover:bg-white/10'
         }`}
         title="Desktop view"
       >
@@ -22,7 +22,7 @@ export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
       <button
         onClick={() => onViewModeChange('tablet')}
         className={`p-2 rounded transition-colors ${
-          viewMode === 'tablet' ? 'bg-electric-violet text-white' : 'hover:bg-white/10'
+          viewMode === 'tablet' ? 'bg-primary text-black' : 'hover:bg-white/10'
         }`}
         title="Tablet view"
       >
@@ -31,7 +31,7 @@ export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
       <button
         onClick={() => onViewModeChange('mobile')}
         className={`p-2 rounded transition-colors ${
-          viewMode === 'mobile' ? 'bg-electric-violet text-white' : 'hover:bg-white/10'
+          viewMode === 'mobile' ? 'bg-primary text-black' : 'hover:bg-white/10'
         }`}
         title="Mobile view"
       >

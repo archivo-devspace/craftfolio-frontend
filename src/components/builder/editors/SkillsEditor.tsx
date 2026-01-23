@@ -70,7 +70,7 @@ export function SkillsEditor({ section, onChange }: Props) {
                   value={skill.name}
                   onChange={(e) => updateSkill(skill.id, 'name', e.target.value)}
                   placeholder="Skill name"
-                  className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <button
                   onClick={() => removeSkill(skill.id)}
@@ -85,7 +85,7 @@ export function SkillsEditor({ section, onChange }: Props) {
                   value={skill.category}
                   onChange={(e) => updateSkill(skill.id, 'category', e.target.value)}
                   placeholder="Category"
-                  className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <div className="flex items-center gap-2">
                   <input

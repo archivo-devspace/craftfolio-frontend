@@ -153,7 +153,7 @@ export const defaultSectionData: Record<SectionType, Omit<Section, 'id' | 'order
       avatarUrl: '',
       backgroundStyle: 'gradient',
       backgroundColor: '#0f172a',
-      gradientColors: ['#6366f1', '#8b5cf6', '#d946ef'],
+      gradientColors: ['#28e98c', '#28e98c', '#28e98c'],
     },
   },
   about: {

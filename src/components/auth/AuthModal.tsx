@@ -85,7 +85,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold gradient-text">
+          <h2 className="text-2xl font-bold text-primary">
             {mode === 'login' ? 'Welcome Back' : 'Create Account'}
           </h2>
           <p className="text-fog/60 mt-2 text-sm">
@@ -114,7 +114,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud placeholder-fog/30"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-cloud placeholder-fog/30"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud placeholder-fog/30"
+                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-cloud placeholder-fog/30"
               />
             </div>
           </div>
@@ -146,7 +146,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
                 placeholder="••••••••"
                 required
                 minLength={6}
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud placeholder-fog/30"
+                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-cloud placeholder-fog/30"
               />
             </div>
           </div>
@@ -154,7 +154,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 bg-gradient-to-r from-electric-violet to-cyber-pink text-white rounded-xl font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 bg-primary text-black rounded-xl font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -174,7 +174,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
           </span>
           <button
             onClick={switchMode}
-            className="text-electric-violet hover:underline font-medium"
+            className="text-primary hover:underline font-medium"
           >
             {mode === 'login' ? 'Sign up' : 'Sign in'}
           </button>

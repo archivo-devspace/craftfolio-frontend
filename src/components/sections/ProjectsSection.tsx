@@ -12,18 +12,18 @@ interface Props {
 
 export function ProjectsSection({ section, isEditing }: Props) {
   const { data } = section;
-  const { theme, radius, largeRadius, themeStyles } = useTheme();
+  const { theme, radius, themeStyles } = useTheme();
 
   const layoutClasses: Record<string, string> = {
-    grid: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6',
-    list: 'flex flex-col gap-4 md:gap-6',
-    masonry: 'columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6',
+    grid: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6',
+    list: 'flex flex-col gap-6',
+    masonry: 'columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6',
   };
 
   return (
     <section
       data-section-type="projects"
-      className="py-24 px-4 relative overflow-hidden"
+      className="py-24 px-6 relative"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -31,22 +31,28 @@ export function ProjectsSection({ section, isEditing }: Props) {
         ...themeStyles,
       }}
     >
-      {/* Background pattern */}
+      {/* Background Accent */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-5 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, ${theme.primaryColor}25 1px, transparent 0)`,
-          backgroundSize: '32px 32px',
+          background: `radial-gradient(circle at 1px 1px, ${theme.primaryColor} 1px, transparent 0)`,
+          backgroundSize: '40px 40px',
         }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+        <div className="text-center mb-12">
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-4"
+            style={{ color: theme.textColor }}
+          >
             {data.title || 'My Projects'}
           </h2>
-          <p className="text-lg max-w-2xl mx-auto" style={{ color: `${theme.textColor}99` }}>
+          <p
+            className="text-lg max-w-2xl mx-auto"
+            style={{ color: `${theme.textColor}80` }}
+          >
             {data.subtitle || 'Check out my latest work'}
           </p>
         </div>
@@ -57,33 +63,49 @@ export function ProjectsSection({ section, isEditing }: Props) {
             {data.projects.map((project) => (
               <div
                 key={project.id}
-                className="group glass overflow-hidden hover:scale-[1.02] transition-all duration-300"
-                style={{ borderRadius: largeRadius }}
+                className="group overflow-hidden transition-all duration-300"
+                style={{
+                  backgroundColor: `${theme.textColor}5`,
+                  borderRadius: radius,
+                }}
               >
                 {/* Project Image */}
-                <div className="relative aspect-video overflow-hidden bg-slate-dark">
+                <div
+                  className="relative aspect-video overflow-hidden"
+                  style={{ backgroundColor: `${theme.textColor}10` }}
+                >
                   {project.imageUrl ? (
                     <img
                       src={project.imageUrl}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <FolderOpen className="w-16 h-16 text-slate-light/50" />
+                      <FolderOpen
+                        className="w-12 h-12"
+                        style={{ color: `${theme.textColor}30` }}
+                      />
                     </div>
                   )}
 
                   {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian/90 via-obsidian/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3"
+                    style={{ backgroundColor: `${theme.backgroundColor}90` }}
+                  >
                     {project.liveUrl && (
                       <a
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 glass rounded-full hover:bg-white/20 transition-colors"
+                        className="p-3 transition-colors"
+                        style={{
+                          backgroundColor: theme.primaryColor,
+                          borderRadius: radius,
+                        }}
                       >
-                        <ExternalLink className="w-5 h-5" />
+                        <ExternalLink className="w-5 h-5 text-black" />
                       </a>
                     )}
                     {project.githubUrl && (
@@ -91,9 +113,13 @@ export function ProjectsSection({ section, isEditing }: Props) {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 glass rounded-full hover:bg-white/20 transition-colors"
+                        className="p-3 transition-colors"
+                        style={{
+                          backgroundColor: `${theme.textColor}20`,
+                          borderRadius: radius,
+                        }}
                       >
-                        <Github className="w-5 h-5" />
+                        <ExternalLink className="w-5 h-5" style={{ color: theme.textColor }} />
                       </a>
                     )}
                   </div>
@@ -101,8 +127,18 @@ export function ProjectsSection({ section, isEditing }: Props) {
 
                 {/* Project Info */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-cloud mb-2">{project.title}</h3>
-                  <p className="text-fog/60 text-sm mb-4 line-clamp-2">{project.description}</p>
+                  <h3
+                    className="text-xl font-bold mb-2"
+                    style={{ color: theme.textColor }}
+                  >
+                    {project.title}
+                  </h3>
+                  <p
+                    className="text-sm mb-4 line-clamp-2"
+                    style={{ color: `${theme.textColor}70` }}
+                  >
+                    {project.description}
+                  </p>
 
                   {/* Tags */}
                   {project.tags && project.tags.length > 0 && (
@@ -110,9 +146,9 @@ export function ProjectsSection({ section, isEditing }: Props) {
                       {project.tags.map((tag, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 text-xs"
+                          className="px-3 py-1 text-xs font-medium"
                           style={{
-                            backgroundColor: `${theme.primaryColor}20`,
+                            backgroundColor: `${theme.primaryColor}15`,
                             color: theme.primaryColor,
                             borderRadius: radius,
                           }}
@@ -128,7 +164,7 @@ export function ProjectsSection({ section, isEditing }: Props) {
           </div>
         ) : (
           <SectionEmptyState
-            icon={<FolderOpen className="w-10 h-10 text-slate-light" />}
+            icon={<FolderOpen className="w-10 h-10" style={{ color: theme.textColor }} />}
             title={isEditing ? 'No projects yet. Add your first project!' : 'No projects to display'}
             isEditing={isEditing}
             actionLabel="Add Project"

@@ -72,28 +72,28 @@ export function ExperienceEditor({ section, onChange }: Props) {
                   value={exp.position}
                   onChange={(e) => updateExperience(exp.id, 'position', e.target.value)}
                   placeholder="Position"
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <input
                   type="text"
                   value={exp.company}
                   onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
                   placeholder="Company"
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="date"
                     value={exp.startDate}
                     onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                   />
                   <input
                     type="date"
                     value={exp.endDate || ''}
                     onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value || null)}
                     disabled={exp.current}
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm disabled:opacity-50"
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm disabled:opacity-50"
                   />
                 </div>
                 <label className="flex items-center gap-2 text-sm text-fog/70">
@@ -110,7 +110,7 @@ export function ExperienceEditor({ section, onChange }: Props) {
                   onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
                   placeholder="Description"
                   rows={3}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm resize-none"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm resize-none"
                 />
               </div>
             </div>

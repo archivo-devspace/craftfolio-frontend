@@ -26,7 +26,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const variantClasses = {
-      primary: 'bg-electric-violet text-white hover:bg-electric-violet/90',
+      primary: 'bg-primary text-black hover:bg-primary/90',
       secondary: 'glass hover:bg-white/10',
       ghost: 'hover:bg-white/10',
       danger: 'bg-red-500/20 text-red-400 hover:bg-red-500/30',
@@ -127,9 +127,9 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
   ({ variant = 'default', className = '', children, ...props }, ref) => {
     const variantClasses = {
       default: 'bg-white/10 text-fog/80',
-      primary: 'bg-electric-violet/20 text-electric-violet',
-      success: 'bg-emerald-glow/20 text-emerald-glow',
-      warning: 'bg-amber-spark/20 text-amber-spark',
+      primary: 'bg-primary/20 text-primary',
+      success: 'bg-primary/20 text-primary',
+      warning: 'bg-primary/20 text-primary',
       danger: 'bg-red-500/20 text-red-400',
     };
 

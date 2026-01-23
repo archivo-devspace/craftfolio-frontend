@@ -114,8 +114,8 @@ export function Sidebar() {
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold gradient-text">Portfolio Builder</h2>
-              <p className="text-xs text-fog/50 mt-1">Design your perfect portfolio</p>
+              <h2 className="text-xl font-bold text-primary">Portfolio Builder</h2>
+              <p className="text-xs text-muted-foreground mt-1">Design your perfect portfolio</p>
             </div>
             {isAuthenticated ? (
               <button
@@ -136,7 +136,7 @@ export function Sidebar() {
             )}
           </div>
           {isAuthenticated && user && (
-            <div className="mt-2 text-xs text-fog/50 flex items-center gap-1">
+            <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
               <Cloud className="w-3 h-3" />
               <span>Signed in as {user.email}</span>
             </div>

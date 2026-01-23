@@ -22,7 +22,7 @@ export function SidebarTabs({ activeTab, onTabChange }: SidebarTabsProps) {
           onClick={() => onTabChange(tab.id)}
           className={`flex-1 py-3 px-4 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
             activeTab === tab.id
-              ? 'text-electric-violet border-b-2 border-electric-violet'
+              ? 'text-primary border-b-2 border-primary'
               : 'text-fog/60 hover:text-fog'
           }`}
         >

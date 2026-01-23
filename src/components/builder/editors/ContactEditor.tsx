@@ -53,7 +53,7 @@ export function ContactEditor({ section, onChange }: Props) {
                   newSocials[idx] = { ...social, platform: e.target.value };
                   onChange('socials', newSocials);
                 }}
-                className="w-28 px-2 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                className="w-28 px-2 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
               >
                 <option value="github" className="bg-charcoal">GitHub</option>
                 <option value="linkedin" className="bg-charcoal">LinkedIn</option>
@@ -70,7 +70,7 @@ export function ContactEditor({ section, onChange }: Props) {
                   onChange('socials', newSocials);
                 }}
                 placeholder="URL"
-                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
               />
               <button
                 onClick={() => {

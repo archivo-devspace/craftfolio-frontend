@@ -24,9 +24,9 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
   {
     name: 'Midnight',
     theme: {
-      primaryColor: '#6366f1',
-      secondaryColor: '#8b5cf6',
-      accentColor: '#f472b6',
+      primaryColor: '#28e98c',
+      secondaryColor: '#28e98c',
+      accentColor: '#28e98c',
       backgroundColor: '#0f172a',
       textColor: '#f8fafc',
     },
@@ -65,7 +65,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
     name: 'Rose',
     theme: {
       primaryColor: '#f43f5e',
-      secondaryColor: '#ec4899',
+      secondaryColor: '#28e98c',
       accentColor: '#fb7185',
       backgroundColor: '#1f1218',
       textColor: '#fce7f3',
@@ -182,7 +182,7 @@ export function ThemeEditor() {
         <select
           value={theme.fontFamily}
           onChange={(e) => updateTheme({ fontFamily: e.target.value })}
-          className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+          className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
         >
           {fontOptions.map((font) => (
             <option key={font.value} value={font.value} className="bg-charcoal">
@@ -195,7 +195,6 @@ export function ThemeEditor() {
       {/* Border Radius */}
       <div>
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
-          <Square className="w-4 h-4" />
           Border Radius
         </h4>
         <div className="grid grid-cols-2 gap-2">
@@ -205,7 +204,7 @@ export function ThemeEditor() {
               onClick={() => updateTheme({ borderRadius: option.value as PortfolioTheme['borderRadius'] })}
               className={`p-2 rounded-lg text-xs transition-colors ${
                 theme.borderRadius === option.value
-                  ? 'bg-electric-violet text-white'
+                  ? 'bg-primary text-black'
                   : 'glass hover:bg-white/10'
               }`}
             >

@@ -53,7 +53,7 @@ export function SettingsPanel({
             type="text"
             value={portfolio.name}
             onChange={(e) => onNameChange(e.target.value)}
-            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
           />
         </div>
         <div>
@@ -62,7 +62,7 @@ export function SettingsPanel({
             type="text"
             value={portfolio.slug}
             onChange={(e) => onSlugChange(e.target.value)}
-            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
             placeholder="my-portfolio"
           />
         </div>
@@ -73,7 +73,7 @@ export function SettingsPanel({
         {saveMessage && (
           <div
             className={`p-2 rounded-lg text-xs text-center ${
-              saveMessage.includes('Error') ? 'bg-red-500/20 text-red-400' : 'bg-emerald-glow/20 text-emerald-glow'
+              saveMessage.includes('Error') ? 'bg-red-500/20 text-red-400' : 'bg-primary/20 text-primary'
             }`}
           >
             {saveMessage}
@@ -82,7 +82,7 @@ export function SettingsPanel({
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="w-full py-3 bg-electric-violet text-white rounded-lg hover:bg-electric-violet/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+          className="w-full py-3 bg-primary text-black rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
         >
           {isSaving ? (
             <>

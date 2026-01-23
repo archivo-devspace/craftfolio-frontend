@@ -47,7 +47,7 @@ export function SortableSidebarItem({ section, index, onSelect, onRemove, onTogg
         <GripVertical className={`w-4 h-4 ${section.visible ? 'text-fog/50' : 'text-fog/30'}`} />
       </button>
       <span className="text-fog/50 text-sm w-4">{index + 1}</span>
-      <Icon className={`w-4 h-4 ${section.visible ? 'text-electric-violet' : 'text-fog/30'}`} />
+      <Icon className={`w-4 h-4 ${section.visible ? 'text-primary' : 'text-fog/30'}`} />
       <span
         className={`flex-1 text-sm ${section.visible ? 'text-fog/80 cursor-pointer hover:text-fog' : 'text-fog/40 cursor-not-allowed'}`}
         onClick={section.visible ? onSelect : undefined}

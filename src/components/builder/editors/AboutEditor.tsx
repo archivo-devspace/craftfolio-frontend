@@ -37,7 +37,7 @@ export function AboutEditor({ section, onChange }: Props) {
                   newHighlights[idx] = e.target.value;
                   onChange('highlights', newHighlights);
                 }}
-                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-violet text-cloud text-sm"
+                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
               />
               <button
                 onClick={() => {
