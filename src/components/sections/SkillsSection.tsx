@@ -16,7 +16,7 @@ export function SkillsSection({ section, isEditing }: Props) {
 
   // Group skills by category
   const groupedSkills = data.skills.reduce((acc, skill) => {
-    const category = skill.category || 'Other';
+    const category = skill.category || 'General';
     if (!acc[category]) {
       acc[category] = [];
     }
@@ -24,164 +24,9 @@ export function SkillsSection({ section, isEditing }: Props) {
     return acc;
   }, {} as Record<string, typeof data.skills>);
 
-  const renderSkillBar = (skill: (typeof data.skills)[0]) => (
-    <div key={skill.id} className="group">
-      <div className="flex justify-between items-center mb-2">
-        <span className="font-medium" style={{ color: theme.textColor }}>
-          {skill.name}
-        </span>
-        <span className="text-sm" style={{ color: `${theme.textColor}60` }}>
-          {skill.level}%
-        </span>
-      </div>
-      <div
-        className="h-2 rounded-full overflow-hidden"
-        style={{ backgroundColor: `${theme.textColor}10` }}
-      >
-        <div
-          className="h-full rounded-full transition-all duration-1000 ease-out"
-          style={{
-            width: `${skill.level}%`,
-            backgroundColor: theme.primaryColor,
-          }}
-        />
-      </div>
-    </div>
-  );
-
-  const renderSkillBadge = (skill: (typeof data.skills)[0]) => (
-    <div
-      key={skill.id}
-      className="px-4 py-2 font-medium transition-colors"
-      style={{
-        backgroundColor: `${theme.primaryColor}15`,
-        color: theme.primaryColor,
-        borderRadius: radius,
-      }}
-    >
-      {skill.name}
-    </div>
-  );
-
-  const renderSkills = () => {
-    if (data.displayStyle === 'bars') {
-      return (
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {Object.entries(groupedSkills).map(([category, skills]) => (
-            <div
-              key={category}
-              className="p-6"
-              style={{
-                backgroundColor: `${theme.textColor}5`,
-                borderRadius: radius,
-              }}
-            >
-              <h3
-                className="text-lg font-semibold mb-4 flex items-center gap-2"
-                style={{ color: theme.textColor }}
-              >
-                <Code className="w-5 h-5" style={{ color: theme.primaryColor }} />
-                {category}
-              </h3>
-              <div className="space-y-4">{skills.map(renderSkillBar)}</div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    if (data.displayStyle === 'badges') {
-      return (
-        <div className="max-w-4xl mx-auto">
-          {Object.entries(groupedSkills).map(([category, skills]) => (
-            <div key={category} className="mb-8 last:mb-0">
-              <h3
-                className="text-lg font-semibold mb-4 flex items-center gap-2"
-                style={{ color: theme.textColor }}
-              >
-                <Code className="w-5 h-5" style={{ color: theme.primaryColor }} />
-                {category}
-              </h3>
-              <div className="flex flex-wrap gap-2">{skills.map(renderSkillBadge)}</div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    // Circles
-    return (
-      <div className="max-w-5xl mx-auto">
-        {Object.entries(groupedSkills).map(([category, skills]) => (
-          <div key={category} className="mb-12 last:mb-0">
-            <h3
-              className="text-lg font-semibold text-center mb-6 flex items-center justify-center gap-2"
-              style={{ color: theme.textColor }}
-            >
-              <Code className="w-5 h-5" style={{ color: theme.primaryColor }} />
-              {category}
-            </h3>
-            <div className="flex flex-wrap justify-center gap-8">
-              {skills.map((skill) => {
-                const circumference = 2 * Math.PI * 40;
-                const strokeDashoffset =
-                  circumference - (skill.level / 100) * circumference;
-
-                return (
-                  <div key={skill.id} className="flex flex-col items-center group">
-                    <div className="relative w-20 h-20">
-                      <svg className="w-full h-full transform -rotate-90">
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="36"
-                          stroke="currentColor"
-                          strokeWidth="6"
-                          fill="transparent"
-                          className=""
-                          style={{ color: `${theme.textColor}15` }}
-                        />
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="36"
-                          stroke={theme.primaryColor}
-                          strokeWidth="6"
-                          fill="transparent"
-                          strokeDasharray={circumference}
-                          strokeDashoffset={strokeDashoffset}
-                          strokeLinecap="round"
-                          className="transition-all duration-1000 ease-out"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span
-                          className="text-lg font-bold"
-                          style={{ color: theme.textColor }}
-                        >
-                          {skill.level}%
-                        </span>
-                      </div>
-                    </div>
-                    <span
-                      className="mt-3 font-medium text-center"
-                      style={{ color: `${theme.textColor}80` }}
-                    >
-                      {skill.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <section
-      className="py-24 px-6 relative"
+      className="py-28 px-6 relative overflow-hidden"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -189,40 +34,131 @@ export function SkillsSection({ section, isEditing }: Props) {
         ...themeStyles,
       }}
     >
-      {/* Background Accent */}
-      <div
-        className="absolute top-1/4 left-0 w-[400px] h-[400px] opacity-5 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 70%)`,
-        }}
-      />
-      <div
-        className="absolute bottom-1/4 right-0 w-[400px] h-[400px] opacity-5 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${theme.accentColor} 0%, transparent 70%)`,
-        }}
-      />
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Large ambient glow */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] opacity-6"
+          style={{
+            background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 40%)`,
+          }}
+        />
+        {/* Corner accents */}
+        <div
+          className="absolute top-0 right-0 w-[400px] h-[400px] opacity-8"
+          style={{
+            background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 60%)`,
+            borderRadius: '0 0 0 100%',
+          }}
+        />
+        <div
+          className="absolute bottom-0 left-0 w-[300px] h-[300px] opacity-8"
+          style={{
+            background: `radial-gradient(circle, ${theme.accentColor} 0%, transparent 60%)`,
+            borderRadius: '0 100% 0 0',
+          }}
+        />
+        {/* Subtle grid */}
+        <div
+          className="absolute inset-0 opacity-2"
+          style={{
+            backgroundImage: `
+              linear-gradient(${theme.primaryColor} 1px, transparent 1px),
+              linear-gradient(90deg, ${theme.primaryColor} 1px, transparent 1px)
+            `,
+            backgroundSize: '80px 80px',
+          }}
+        />
+      </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
+            className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
             style={{ color: theme.textColor }}
           >
             {data.title || 'Skills & Technologies'}
           </h2>
+          <div
+            className="w-20 h-1 mx-auto rounded-full mb-4"
+            style={{ backgroundColor: theme.primaryColor }}
+          />
           <p
-            className="text-lg max-w-2xl mx-auto"
+            className="text-lg max-w-2xl mx-auto opacity-70"
             style={{ color: `${theme.textColor}80` }}
           >
             {data.subtitle || 'Technologies I work with'}
           </p>
         </div>
 
-        {/* Skills Display */}
+        {/* Skills Grid - Each Category in Own Card */}
         {data.skills && data.skills.length > 0 ? (
-          renderSkills()
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {Object.entries(groupedSkills).map(([category, skills]) => (
+              <div
+                key={category}
+                className="p-8 relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
+                style={{
+                  backgroundColor: theme.backgroundColor,
+                  borderRadius: radius,
+                  border: `1px solid ${theme.textColor}10`,
+                }}
+              >
+                {/* Card Glow */}
+                <div
+                  className="absolute -top-20 -right-20 w-40 h-40 opacity-10 pointer-events-none"
+                  style={{
+                    background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 60%)`,
+                  }}
+                />
+
+                <div className="relative z-10">
+                  <h3
+                    className="text-xl font-bold mb-6 flex items-center gap-3"
+                    style={{ color: theme.textColor }}
+                  >
+                    <div
+                      className="p-2 rounded-lg"
+                      style={{
+                        background: `linear-gradient(135deg, ${theme.primaryColor}20, ${theme.accentColor}20)`,
+                      }}
+                    >
+                      <Code className="w-6 h-6" style={{ color: theme.primaryColor }} />
+                    </div>
+                    {category}
+                  </h3>
+
+                  <div className="space-y-5">
+                    {skills.map((skill) => (
+                      <div key={skill.id} className="group">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-medium" style={{ color: theme.textColor }}>
+                            {skill.name}
+                          </span>
+                          <span className="text-sm font-medium" style={{ color: theme.primaryColor }}>
+                            {skill.level}%
+                          </span>
+                        </div>
+                        <div
+                          className="h-3 rounded-full overflow-hidden"
+                          style={{ backgroundColor: `${theme.textColor}10` }}
+                        >
+                          <div
+                            className="h-full rounded-full transition-all duration-1000 ease-out group-hover:shadow-lg"
+                            style={{
+                              width: `${skill.level}%`,
+                              background: `linear-gradient(90deg, ${theme.primaryColor}, ${theme.accentColor})`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <SectionEmptyState
             icon={<Code className="w-10 h-10" style={{ color: theme.textColor }} />}

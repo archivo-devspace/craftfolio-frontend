@@ -40,6 +40,42 @@ const defaultTheme: PortfolioTheme = {
   borderRadius: 'medium',
 };
 
+// Helper function to check if a value is serializable
+function isSerializable(value: unknown): boolean {
+  if (value === null || value === undefined) return true;
+  if (typeof value === 'string') return true;
+  if (typeof value === 'number') return true;
+  if (typeof value === 'boolean') return true;
+  if (typeof value === 'bigint') return true;
+  if (typeof value === 'symbol') return true;
+  
+  // Check for functions or class instances
+  if (typeof value === 'function') return false;
+  if (typeof value === 'object') {
+    // Check for DOM elements and React components
+    if (value instanceof HTMLElement) return false;
+    if (value instanceof Element) return false;
+    if (value instanceof Node) return false;
+    
+    // Check for React-specific objects
+    if ('$$typeof' in value) return false;
+    if ('_owner' in value) return false;
+    if ('_store' in value) return false;
+    
+    // Handle arrays
+    if (Array.isArray(value)) {
+      return value.every(isSerializable);
+    }
+    
+    // Handle plain objects
+    if (Object.getPrototypeOf(value) === Object.prototype) {
+      return Object.values(value).every(isSerializable);
+    }
+  }
+  
+  return false;
+}
+
 const createDefaultPortfolio = (): Portfolio => ({
   name: 'My Portfolio',
   slug: 'my-portfolio',
@@ -134,11 +170,34 @@ export const usePortfolioStore = create<PortfolioState>()(
         set((state) => ({
           portfolio: {
             ...state.portfolio,
-            sections: state.portfolio.sections.map((s) =>
-              s.id === id
-                ? { ...s, ...updates, data: { ...s.data, ...(updates.data || {}) } } as Section
-                : s
-            ),
+            sections: state.portfolio.sections.map((s) => {
+              if (s.id !== id) return s;
+              
+              // Only keep serializable data
+              const currentData = s.data || {};
+              const newData = updates.data || {};
+              
+              // Filter out any non-serializable properties
+              const sanitizedData: Record<string, unknown> = {};
+              for (const key of Object.keys(currentData)) {
+                if (isSerializable(currentData[key as keyof typeof currentData])) {
+                  sanitizedData[key] = currentData[key];
+                }
+              }
+              for (const key of Object.keys(newData)) {
+                if (isSerializable(newData[key as keyof typeof newData])) {
+                  sanitizedData[key] = newData[key];
+                }
+              }
+              
+              return {
+                id: s.id,
+                type: s.type,
+                order: s.order,
+                visible: s.visible,
+                data: sanitizedData,
+              } as Section;
+            }),
           },
         })),
 

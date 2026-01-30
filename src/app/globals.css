@@ -107,7 +107,7 @@
 
 .drop-target {
   @apply ring-2 ring-primary ring-offset-2 ring-offset-obsidian;
-}
+  }
 
 /* Custom scrollbar for webkit browsers */
 ::-webkit-scrollbar {

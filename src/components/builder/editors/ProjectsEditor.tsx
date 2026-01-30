@@ -1,7 +1,7 @@
 'use client';
 
 import { ProjectsSection, Project } from '@/types/portfolio';
-import { Input, Select } from '@/components/ui';
+import { Input } from '@/components/ui';
 import { v4 as uuidv4 } from 'uuid';
 import { GripVertical, Trash2, Plus } from 'lucide-react';
 
@@ -41,17 +41,6 @@ export function ProjectsEditor({ section, onChange }: Props) {
     <div className="space-y-4">
       <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="My Projects" />
       <Input label="Subtitle" value={data.subtitle} onChange={(v) => onChange('subtitle', v)} placeholder="Check out my work" />
-
-      <Select
-        label="Layout Style"
-        value={data.layout}
-        onChange={(v) => onChange('layout', v)}
-        options={[
-          { value: 'grid', label: 'Grid' },
-          { value: 'list', label: 'List' },
-          { value: 'masonry', label: 'Masonry' },
-        ]}
-      />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex items-center justify-between mb-4">

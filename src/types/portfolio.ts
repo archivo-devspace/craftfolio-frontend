@@ -105,6 +105,9 @@ export interface ContactSection extends BaseSection {
     email: string;
     phone: string;
     location: string;
+    name: string;
+    formSubject: string;
+    formMessage: string;
     socials: {
       platform: string;
       url: string;

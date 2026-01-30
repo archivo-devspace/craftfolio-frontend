@@ -1,7 +1,7 @@
 'use client';
 
 import { SkillsSection, Skill } from '@/types/portfolio';
-import { Input, Select } from '@/components/ui';
+import { Input } from '@/components/ui';
 import { v4 as uuidv4 } from 'uuid';
 import { Trash2, Plus } from 'lucide-react';
 
@@ -38,17 +38,6 @@ export function SkillsEditor({ section, onChange }: Props) {
     <div className="space-y-4">
       <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="Skills" />
       <Input label="Subtitle" value={data.subtitle} onChange={(v) => onChange('subtitle', v)} placeholder="Technologies I work with" />
-
-      <Select
-        label="Display Style"
-        value={data.displayStyle}
-        onChange={(v) => onChange('displayStyle', v)}
-        options={[
-          { value: 'bars', label: 'Progress Bars' },
-          { value: 'badges', label: 'Badges' },
-          { value: 'circles', label: 'Circles' },
-        ]}
-      />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex items-center justify-between mb-4">

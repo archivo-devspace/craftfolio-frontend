@@ -31,14 +31,14 @@ export function ExperienceSection({ section, isEditing }: Props) {
       }}
     >
       {/* Background Accent */}
-      <div
+        <div
         className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{
+          style={{
           backgroundImage: `linear-gradient(to right, ${theme.primaryColor}10 1px, transparent 1px),
                             linear-gradient(to bottom, ${theme.primaryColor}10 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }}
-      />
+            backgroundSize: '60px 60px',
+          }}
+        />
 
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Section Header */}
@@ -65,19 +65,19 @@ export function ExperienceSection({ section, isEditing }: Props) {
                 key={exp.id}
                 className={`relative mb-8 last:mb-0 ${
                   index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-auto'
-                }`}
+                  }`}
               >
                 {/* Timeline dot */}
                 <div
                   className="absolute left-0 md:left-1/2 top-0 w-3 h-3 rounded-full transform -translate-x-1/2 z-10"
-                  style={{ backgroundColor: theme.primaryColor }}
-                />
+                    style={{ backgroundColor: theme.primaryColor }}
+                  />
 
                 {/* Content card */}
                 <div
                   className={`ml-8 md:ml-0 p-5 ${
                     index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'
-                  }`}
+                    }`}
                   style={{
                     backgroundColor: `${theme.textColor}5`,
                     borderRadius: radius,
@@ -125,7 +125,7 @@ export function ExperienceSection({ section, isEditing }: Props) {
                           key={idx}
                           className={`text-sm flex items-start gap-2 ${
                             index % 2 === 0 ? 'md:flex-row-reverse' : ''
-                          }`}
+                            }`}
                           style={{ color: `${theme.textColor}70` }}
                         >
                           <span

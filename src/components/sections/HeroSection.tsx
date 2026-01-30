@@ -2,7 +2,7 @@
 
 import { HeroSection as HeroSectionType } from '@/types/portfolio';
 import { useTheme, useScrollToSection } from '@/hooks';
-import { Sparkles, ArrowDown, UserRound } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 
 interface Props {
   section: HeroSectionType;
@@ -19,45 +19,78 @@ export function HeroSection({ section, isEditing }: Props) {
     <div
       className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
       style={{
-        backgroundColor: data.backgroundColor || theme.backgroundColor,
+        backgroundColor: theme.backgroundColor,
         fontFamily: theme.fontFamily,
         color: theme.textColor,
         ...themeStyles,
       }}
     >
-      {/* Background Accent - using theme secondary color */}
-      <div
-        className="absolute inset-0 overflow-hidden pointer-events-none"
-        style={{ backgroundColor: theme.backgroundColor }}
-      >
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Large ambient glow */}
         <div
-          className="absolute top-0 right-0 w-[600px] h-[600px] opacity-5"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] opacity-6"
           style={{
-            background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 70%)`,
-            borderRadius: '0 0 0 100%',
+            background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 40%)`,
           }}
         />
+
+      
+
+        {/* Grid pattern */}
         <div
-          className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-5"
+          className="absolute inset-0 opacity-3"
           style={{
-            background: `radial-gradient(circle, ${theme.accentColor} 0%, transparent 70%)`,
-            borderRadius: '0 100% 0 0',
+            backgroundImage: `
+              linear-gradient(${theme.primaryColor} 1px, transparent 1px),
+              linear-gradient(90deg, ${theme.primaryColor} 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        {/* Grid fade overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `linear-gradient(to bottom, transparent 0%, ${theme.backgroundColor} 90%, ${theme.backgroundColor} 100%)`,
           }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-        {/* Avatar */}
-        <div className="mb-8">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      
+
+        {/* Avatar with sophisticated glow */}
+        <div className="mb-8 relative">
+          {/* Multiple glow layers */}
+          <div
+            className="absolute inset-0 rounded-full blur-2xl opacity-20 animate-pulse"
+            style={{
+              background: `radial-gradient(circle, ${theme.primaryColor} 0%, transparent 70%)`,
+              transform: 'scale(1.8)',
+              animationDuration: '3s',
+            }}
+          />
+          <div
+            className="absolute inset-0 rounded-full blur-xl opacity-30"
+            style={{
+              background: `radial-gradient(circle, ${theme.accentColor} 0%, transparent 70%)`,
+              transform: 'scale(1.4)',
+            }}
+          />
+
           {data.avatarUrl ? (
             <div
-              className="inline-block p-1 shadow-2xl"
+              className="inline-block relative"
               style={{ borderRadius: '50%' }}
             >
               <div
-                className="w-28 h-28 rounded-full overflow-hidden"
-                style={{ borderRadius: radius }}
+                className="w-36 h-36 rounded-full overflow-hidden ring-4"
+                style={{
+                  borderColor: `${theme.primaryColor}40`,
+                }}
               >
                 <img
                   src={data.avatarUrl}
@@ -68,31 +101,32 @@ export function HeroSection({ section, isEditing }: Props) {
             </div>
           ) : (
             <div
-              className="inline-flex items-center justify-center size-40 shadow-lg"
+              className="inline-flex items-center justify-center w-36 h-36 relative shadow-2xl"
               style={{
-                backgroundColor: `${theme.primaryColor}15`,
+                backgroundColor: `${theme.primaryColor}10`,
                 borderRadius: '50%',
+                border: `3px solid ${theme.primaryColor}30`,
               }}
             >
               <UserRound
-               className="size-20"
-               style={{ color: theme.primaryColor }}
+                className="w-20 h-20"
+                style={{ color: theme.primaryColor }}
               />
             </div>
           )}
         </div>
 
-        {/* Name */}
+        {/* Name with gradient text effect */}
         <h1
-          className="text-4xl md:text-6xl font-bold mb-3 tracking-tight"
+          className="text-5xl md:text-7xl font-bold mb-4 tracking-tight leading-tight"
           style={{ color: theme.textColor }}
         >
           {data.name || (isEditing ? 'Your Name' : '')}
         </h1>
 
-        {/* Title with accent color */}
+        {/* Title with accent */}
         <p
-          className="text-lg md:text-2xl font-medium mb-4"
+          className="text-2xl md:text-3xl font-semibold mb-6"
           style={{ color: theme.primaryColor }}
         >
           {data.title || (isEditing ? 'Your Title' : '')}
@@ -100,16 +134,16 @@ export function HeroSection({ section, isEditing }: Props) {
 
         {/* Subtitle */}
         <p
-          className="text-base md:text-lg max-w-xl mx-auto mb-10 opacity-70"
+          className="text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed opacity-70"
           style={{ color: theme.textColor }}
         >
           {data.subtitle || (isEditing ? 'Add a catchy subtitle' : '')}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-wrap gap-3 justify-center">
+        <div className="flex flex-wrap gap-4 justify-center">
           <button
-            className="px-6 py-2.5 font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
+            className="px-10 py-4 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group"
             style={{
               backgroundColor: theme.primaryColor,
               color: '#000',
@@ -117,29 +151,61 @@ export function HeroSection({ section, isEditing }: Props) {
             }}
             onClick={scrollToProjects}
           >
-            View Work
+            <span className="flex items-center gap-2">
+              View Work
+              <svg
+                className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </span>
           </button>
           <button
-            className="px-6 py-2.5 font-semibold transition-all duration-200"
+            className="px-10 py-4 font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
             style={{
               backgroundColor: 'transparent',
               color: theme.textColor,
               borderRadius: radius,
-              border: `1px solid ${theme.textColor}30`,
+
             }}
             onClick={scrollToContact}
           >
             Contact Me
           </button>
         </div>
+       
       </div>
 
       {/* Scroll indicator */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
-        style={{ color: theme.textColor, opacity: 0.4 }}
+        className=" mt-10 left-1/2 -translate-x-1/2"
+        style={{ color: theme.primaryColor }}
       >
-        <ArrowDown className="w-5 h-5" />
+        <div className="flex flex-col items-center gap-2">
+          <span
+            className="text-xs uppercase tracking-widest opacity-40"
+            style={{ color: theme.textColor }}
+          >
+            Scroll
+          </span>
+          <div className="w-6 h-10 rounded-full border-2 flex items-start justify-center p-1">
+            <div
+              className="w-1.5 h-2 rounded-full animate-bounce"
+              style={{
+                backgroundColor: theme.primaryColor,
+                animationDuration: '1.5s',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
