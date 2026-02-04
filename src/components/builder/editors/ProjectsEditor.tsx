@@ -39,8 +39,8 @@ export function ProjectsEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="My Projects" />
-      <Input label="Subtitle" value={data.subtitle} onChange={(v) => onChange('subtitle', v)} placeholder="Check out my work" />
+      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="My Projects" />
+      <Input label="Subtitle" value={data.subtitle} onValueChange={(v) => onChange('subtitle', v)} placeholder="Check out my work" />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex items-center justify-between mb-4">

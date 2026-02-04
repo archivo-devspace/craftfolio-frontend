@@ -14,14 +14,14 @@ export function AboutEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="About Me" />
-      <TextArea label="Description" value={data.description} onChange={(v) => onChange('description', v)} rows={6} placeholder="Write about yourself..." />
-      <Input label="Image URL" value={data.imageUrl} onChange={(v) => onChange('imageUrl', v)} placeholder="https://example.com/photo.jpg" />
+      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="About Me" />
+      <TextArea label="Description" value={data.description} onValueChange={(v) => onChange('description', v)} rows={6} placeholder="Write about yourself..." />
+      <Input label="Image URL" value={data.imageUrl} onValueChange={(v) => onChange('imageUrl', v)} placeholder="https://example.com/photo.jpg" />
 
       <div className="grid grid-cols-3 gap-2">
-        <Input label="Years Exp." value={data.yearsExperience || ''} onChange={(v) => onChange('yearsExperience', v)} placeholder="5+" />
-        <Input label="Projects" value={data.projectsCount || ''} onChange={(v) => onChange('projectsCount', v)} placeholder="50+" />
-        <Input label="Clients" value={data.clientsCount || ''} onChange={(v) => onChange('clientsCount', v)} placeholder="30+" />
+        <Input label="Years Exp." value={data.yearsExperience || ''} onValueChange={(v) => onChange('yearsExperience', v)} placeholder="5+" />
+        <Input label="Projects" value={data.projectsCount || ''} onValueChange={(v) => onChange('projectsCount', v)} placeholder="50+" />
+        <Input label="Clients" value={data.clientsCount || ''} onValueChange={(v) => onChange('clientsCount', v)} placeholder="30+" />
       </div>
 
       <div className="mb-4">

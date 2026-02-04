@@ -36,8 +36,8 @@ export function SkillsEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="Skills" />
-      <Input label="Subtitle" value={data.subtitle} onChange={(v) => onChange('subtitle', v)} placeholder="Technologies I work with" />
+      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Skills" />
+      <Input label="Subtitle" value={data.subtitle} onValueChange={(v) => onChange('subtitle', v)} placeholder="Technologies I work with" />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex items-center justify-between mb-4">

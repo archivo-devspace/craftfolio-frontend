@@ -37,17 +37,17 @@ export function ContactEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="Get In Touch" />
-      <Input label="Subtitle" value={data.subtitle} onChange={(v) => onChange('subtitle', v)} placeholder="Let's work together" />
-      <Input label="Email" value={data.email} onChange={(v) => onChange('email', v)} placeholder="your@email.com" type="email" />
-      <Input label="Phone" value={data.phone} onChange={(v) => onChange('phone', v)} placeholder="+1 234 567 890" />
-      <Input label="Location" value={data.location} onChange={(v) => onChange('location', v)} placeholder="City, Country" />
+      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Get In Touch" />
+      <Input label="Subtitle" value={data.subtitle} onValueChange={(v) => onChange('subtitle', v)} placeholder="Let's work together" />
+      <Input label="Email" value={data.email} onValueChange={(v) => onChange('email', v)} placeholder="your@email.com" type="email" />
+      <Input label="Phone" value={data.phone} onValueChange={(v) => onChange('phone', v)} placeholder="+1 234 567 890" />
+      <Input label="Location" value={data.location} onValueChange={(v) => onChange('location', v)} placeholder="City, Country" />
 
       <div className="border-t border-white/10 pt-4 mt-4">
         <h4 className="text-sm font-medium mb-3 text-fog/70">Form Default Values</h4>
-        <Input label="Default Name" value={data.name} onChange={(v) => onChange('name', v)} placeholder="Your name" />
-        <Input label="Default Subject" value={data.formSubject} onChange={(v) => onChange('formSubject', v)} placeholder="Default subject line" />
-        <TextArea label="Default Message" value={data.formMessage} onChange={(v) => onChange('formMessage', v)} placeholder="Default message template" />
+        <Input label="Default Name" value={data.name} onValueChange={(v) => onChange('name', v)} placeholder="Your name" />
+        <Input label="Default Subject" value={data.formSubject} onValueChange={(v) => onChange('formSubject', v)} placeholder="Default subject line" />
+        <TextArea label="Default Message" value={data.formMessage} onValueChange={(v) => onChange('formMessage', v)} placeholder="Default message template" />
       </div>
 
       <div className="mb-4">

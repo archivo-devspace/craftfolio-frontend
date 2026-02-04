@@ -40,7 +40,7 @@ export function ExperienceEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onChange={(v) => onChange('title', v)} placeholder="Work Experience" />
+      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Work Experience" />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex items-center justify-between mb-4">

@@ -5,10 +5,11 @@ import { forwardRef } from 'react';
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  onValueChange?: (value: string) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = '', ...props }, ref) => {
+  ({ label, error, className = '', onValueChange, onChange, ...props }, ref) => {
     return (
       <div className="mb-4">
         {label && (
@@ -19,6 +20,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           className={`w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm ${
             error ? 'border-red-500/50' : ''
           } ${className}`}
+          onChange={(e) => {
+            onChange?.(e);
+            onValueChange?.(e.target.value);
+          }}
           {...props}
         />
         {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
@@ -32,10 +37,11 @@ Input.displayName = 'Input';
 interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
+  onValueChange?: (value: string) => void;
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ label, error, className = '', ...props }, ref) => {
+  ({ label, error, className = '', onValueChange, onChange, ...props }, ref) => {
     return (
       <div className="mb-4">
         {label && (
@@ -46,6 +52,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           className={`w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm resize-none ${
             error ? 'border-red-500/50' : ''
           } ${className}`}
+          onChange={(e) => {
+            onChange?.(e);
+            onValueChange?.(e.target.value);
+          }}
           {...props}
         />
         {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
