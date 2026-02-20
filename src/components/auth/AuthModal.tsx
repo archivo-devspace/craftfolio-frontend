@@ -3,15 +3,45 @@
 import { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { usePortfolioStore } from '@/store/portfolioStore';
+import { useLocaleStore } from '@/store/localeStore';
 import { api } from '@/lib/api';
 import { X, Mail, Lock, User, Loader2 } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  className?: string;
 }
 
-export function AuthModal({ isOpen, onClose }: Props) {
+function localizeAuthError(error: string, t: (key: string) => string) {
+  const normalized = error.toLowerCase();
+
+  if (normalized.includes('invalid') && normalized.includes('credential')) {
+    return t('auth.errors.invalidCredentials');
+  }
+  if (normalized.includes('unauthorized')) {
+    return t('auth.errors.unauthorized');
+  }
+  if (normalized.includes('already') && (normalized.includes('exist') || normalized.includes('taken'))) {
+    return t('auth.errors.userExists');
+  }
+  if (normalized.includes('email') && normalized.includes('invalid')) {
+    return t('auth.errors.invalidEmail');
+  }
+  if (
+    normalized.includes('password') &&
+    (normalized.includes('at least') || normalized.includes('minimum') || normalized.includes('6'))
+  ) {
+    return t('auth.errors.passwordMin');
+  }
+  if (normalized.includes('network') || normalized.includes('failed to fetch')) {
+    return t('auth.errors.network');
+  }
+
+  return error || t('auth.errors.default');
+}
+
+export function AuthModal({ isOpen, onClose, className = '' }: Props) {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,6 +49,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
   
   const { login, register, isLoading, error, clearError } = useAuthStore();
   const { loadPortfolio, resetPortfolio } = usePortfolioStore();
+  const { t } = useLocaleStore();
 
   if (!isOpen) return null;
 
@@ -68,7 +99,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4">
+    <div className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 ${className}`}>
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -88,19 +119,19 @@ export function AuthModal({ isOpen, onClose }: Props) {
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-primary">
-            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+            {mode === 'login' ? t('auth.welcomeBack') : t('auth.createAccount')}
           </h2>
           <p className="text-fog/60 mt-2 text-sm">
             {mode === 'login' 
-              ? 'Sign in to access your portfolios' 
-              : 'Start building your portfolio today'}
+              ? t('auth.signInToAccess')
+              : t('auth.startBuilding')}
           </p>
         </div>
 
         {/* Error message */}
         {error && (
           <div className="mb-6 p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-sm text-center">
-            {error}
+            {localizeAuthError(error, t)}
           </div>
         )}
 
@@ -108,14 +139,14 @@ export function AuthModal({ isOpen, onClose }: Props) {
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
             <div>
-              <label className="block text-fog/70 text-sm mb-2">Name</label>
+              <label className="block text-fog/70 text-sm mb-2">{t('auth.name')}</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-fog/40" />
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t('auth.namePlaceholder')}
                   className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-cloud placeholder-fog/30"
                 />
               </div>
@@ -123,14 +154,14 @@ export function AuthModal({ isOpen, onClose }: Props) {
           )}
 
           <div>
-            <label className="block text-fog/70 text-sm mb-2">Email</label>
+            <label className="block text-fog/70 text-sm mb-2">{t('auth.email')}</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-fog/40" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
+                placeholder={t('auth.emailPlaceholder')}
                 required
                 className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-cloud placeholder-fog/30"
               />
@@ -138,14 +169,14 @@ export function AuthModal({ isOpen, onClose }: Props) {
           </div>
 
           <div>
-            <label className="block text-fog/70 text-sm mb-2">Password</label>
+            <label className="block text-fog/70 text-sm mb-2">{t('auth.password')}</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-fog/40" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t('auth.passwordPlaceholder')}
                 required
                 minLength={6}
                 className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-cloud placeholder-fog/30"
@@ -158,27 +189,27 @@ export function AuthModal({ isOpen, onClose }: Props) {
             disabled={isLoading}
             className="w-full py-3 bg-primary text-black rounded-xl font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Please wait...</span>
-              </>
-            ) : (
-              <span>{mode === 'login' ? 'Sign In' : 'Create Account'}</span>
-            )}
-          </button>
+          {isLoading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>{t('auth.pleaseWait')}</span>
+            </>
+          ) : (
+            <span>{mode === 'login' ? t('auth.signIn') : t('auth.createAccountAction')}</span>
+          )}
+        </button>
         </form>
 
         {/* Switch mode */}
         <div className="mt-6 text-center text-sm">
           <span className="text-fog/60">
-            {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
+            {mode === 'login' ? `${t('auth.dontHaveAccount')} ` : `${t('auth.alreadyHaveAccount')} `}
           </span>
           <button
             onClick={switchMode}
             className="text-primary hover:underline font-medium"
           >
-            {mode === 'login' ? 'Sign up' : 'Sign in'}
+            {mode === 'login' ? t('auth.signUp') : t('auth.signIn')}
           </button>
         </div>
       </div>

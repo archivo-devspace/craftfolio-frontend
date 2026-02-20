@@ -1,13 +1,14 @@
 import { SectionType } from '@/types/portfolio';
+import { useLocaleStore } from '@/store/localeStore';
 import { Layout, User, FolderOpen, Code, Briefcase, Mail } from 'lucide-react';
 
-const sectionTypes: { type: SectionType; label: string; icon: typeof Layout }[] = [
-  { type: 'hero', label: 'Hero', icon: Layout },
-  { type: 'about', label: 'About', icon: User },
-  { type: 'projects', label: 'Projects', icon: FolderOpen },
-  { type: 'skills', label: 'Skills', icon: Code },
-  { type: 'experience', label: 'Experience', icon: Briefcase },
-  { type: 'contact', label: 'Contact', icon: Mail },
+const sectionTypes: { type: SectionType; labelKey: string; icon: typeof Layout }[] = [
+  { type: 'hero', labelKey: 'sections.hero', icon: Layout },
+  { type: 'about', labelKey: 'sections.about', icon: User },
+  { type: 'projects', labelKey: 'sections.projects', icon: FolderOpen },
+  { type: 'skills', labelKey: 'sections.skills', icon: Code },
+  { type: 'experience', labelKey: 'sections.experience', icon: Briefcase },
+  { type: 'contact', labelKey: 'sections.contact', icon: Mail },
 ];
 
 interface AddSectionPanelProps {
@@ -18,6 +19,7 @@ interface AddSectionPanelProps {
 }
 
 export function AddSectionPanel({ isOpen, existingSectionTypes, onAddSection, onClose }: AddSectionPanelProps) {
+  const { t } = useLocaleStore();
   if (!isOpen) return null;
 
   return (
@@ -42,8 +44,8 @@ export function AddSectionPanel({ isOpen, existingSectionTypes, onAddSection, on
           >
             <Icon className="w-4 h-4 text-primary" />
             <span className="text-sm text-fog/80">
-              {sectionType.label}
-              {isAdded && <span className="text-xs ml-2 opacity-60">(Added)</span>}
+              {t(sectionType.labelKey)}
+              {isAdded && <span className="text-xs ml-2 opacity-60">({t('sections.added')})</span>}
             </span>
           </button>
         );

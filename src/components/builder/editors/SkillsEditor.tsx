@@ -2,6 +2,7 @@
 
 import { SkillsSection, Skill } from "@/types/portfolio";
 import { Input } from "@/components/ui";
+import { useLocaleStore } from "@/store/localeStore";
 import { v4 as uuidv4 } from "uuid";
 import { Trash2, Plus } from "lucide-react";
 
@@ -12,13 +13,14 @@ interface Props {
 
 export function SkillsEditor({ section, onChange }: Props) {
   const { data } = section;
+  const { t } = useLocaleStore();
 
   const addSkill = () => {
     const newSkill: Skill = {
       id: uuidv4(),
-      name: "New Skill",
+      name: t("editors.skills.newSkillName"),
       level: 80,
-      category: "General",
+      category: t("editors.skills.newSkillCategory"),
     };
     onChange("skills", [...data.skills, newSkill]);
   };
@@ -40,28 +42,28 @@ export function SkillsEditor({ section, onChange }: Props) {
   return (
     <div className="space-y-4">
       <Input
-        label="Title"
+        label={t("editors.skills.title")}
         value={data.title}
         onValueChange={(v) => onChange("title", v)}
-        placeholder="Skills"
+        placeholder={t("editors.skills.titlePlaceholder")}
       />
       <Input
-        label="Subtitle"
+        label={t("editors.skills.subtitle")}
         value={data.subtitle}
         onValueChange={(v) => onChange("subtitle", v)}
-        placeholder="Technologies I work with"
+        placeholder={t("editors.skills.subtitlePlaceholder")}
       />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
           <label className="text-fog/70 text-sm font-medium">
-            Skills ({data.skills.length})
+            {t("editors.skills.skills")} ({data.skills.length})
           </label>
           <button
             onClick={addSkill}
             className="px-3 py-1 glass rounded-lg hover:bg-white/10 text-sm flex items-center gap-1"
           >
-            <Plus className="w-3 h-3" /> Add
+            <Plus className="w-3 h-3" /> {t("editors.skills.add")}
           </button>
         </div>
 
@@ -75,7 +77,7 @@ export function SkillsEditor({ section, onChange }: Props) {
                   onChange={(e) =>
                     updateSkill(skill.id, "name", e.target.value)
                   }
-                  placeholder="Skill name"
+                  placeholder={t("editors.skills.skillNamePlaceholder")}
                   className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <button
@@ -92,7 +94,7 @@ export function SkillsEditor({ section, onChange }: Props) {
                   onChange={(e) =>
                     updateSkill(skill.id, "category", e.target.value)
                   }
-                  placeholder="Category"
+                  placeholder={t("editors.skills.categoryPlaceholder")}
                   className="w-full min-w-0 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <div className="w-full rounded-lg border border-white/10 bg-white/5 px-2 py-2">

@@ -1,8 +1,9 @@
 'use client';
 
 import { usePortfolioStore } from '@/store/portfolioStore';
+import { useLocaleStore } from '@/store/localeStore';
 import { PortfolioTheme, HeroSection } from '@/types/portfolio';
-import { Palette, Type, Square } from 'lucide-react';
+import { Palette, Type } from 'lucide-react';
 
 const fontOptions = [
   { value: 'Inter', label: 'Inter' },
@@ -14,15 +15,15 @@ const fontOptions = [
 ];
 
 const radiusOptions = [
-  { value: 'none', label: 'Sharp (0)' },
-  { value: 'small', label: 'Small (4px)' },
-  { value: 'medium', label: 'Medium (8px)' },
-  { value: 'large', label: 'Large (16px)' },
+  { value: 'none', labelKey: 'themeEditor.radiusSharp' },
+  { value: 'small', labelKey: 'themeEditor.radiusSmall' },
+  { value: 'medium', labelKey: 'themeEditor.radiusMedium' },
+  { value: 'large', labelKey: 'themeEditor.radiusLarge' },
 ];
 
-const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
+const presetThemes: { nameKey: string; theme: Partial<PortfolioTheme> }[] = [
   {
-    name: 'Midnight',
+    nameKey: 'themeEditor.themeMidnight',
     theme: {
       primaryColor: '#28e98c',
       secondaryColor: '#28e98c',
@@ -32,7 +33,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
     },
   },
   {
-    name: 'Ocean',
+    nameKey: 'themeEditor.themeOcean',
     theme: {
       primaryColor: '#0ea5e9',
       secondaryColor: '#06b6d4',
@@ -42,7 +43,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
     },
   },
   {
-    name: 'Forest',
+    nameKey: 'themeEditor.themeForest',
     theme: {
       primaryColor: '#10b981',
       secondaryColor: '#059669',
@@ -52,7 +53,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
     },
   },
   {
-    name: 'Sunset',
+    nameKey: 'themeEditor.themeSunset',
     theme: {
       primaryColor: '#f97316',
       secondaryColor: '#ef4444',
@@ -62,7 +63,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
     },
   },
   {
-    name: 'Rose',
+    nameKey: 'themeEditor.themeRose',
     theme: {
       primaryColor: '#f43f5e',
       secondaryColor: '#28e98c',
@@ -72,7 +73,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
     },
   },
   {
-    name: 'Monochrome',
+    nameKey: 'themeEditor.themeMonochrome',
     theme: {
       primaryColor: '#a1a1aa',
       secondaryColor: '#71717a',
@@ -85,6 +86,7 @@ const presetThemes: { name: string; theme: Partial<PortfolioTheme> }[] = [
 
 export function ThemeEditor() {
   const { portfolio, updateTheme, updateSection } = usePortfolioStore();
+  const { t } = useLocaleStore();
   const { theme } = portfolio;
 
   // Update hero section gradient when theme changes
@@ -109,12 +111,12 @@ export function ThemeEditor() {
       <div>
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
           <Palette className="w-4 h-4" />
-          Preset Themes
+          {t('themeEditor.presetThemes')}
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {presetThemes.map((preset) => (
             <button
-              key={preset.name}
+              key={preset.nameKey}
               onClick={() => applyThemeToSections(preset.theme)}
               className="p-3 glass rounded-lg hover:bg-white/10 transition-colors text-left"
             >
@@ -132,7 +134,7 @@ export function ThemeEditor() {
                   style={{ backgroundColor: preset.theme.accentColor }}
                 />
               </div>
-              <span className="text-xs text-fog/80">{preset.name}</span>
+              <span className="text-xs text-fog/80">{t(preset.nameKey)}</span>
             </button>
           ))}
         </div>
@@ -142,31 +144,31 @@ export function ThemeEditor() {
       <div>
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
           <Palette className="w-4 h-4" />
-          Custom Colors
+          {t('themeEditor.customColors')}
         </h4>
         <div className="space-y-3">
           <ColorInput
-            label="Primary"
+            label={t('themeEditor.primary')}
             value={theme.primaryColor}
             onChange={(v) => updateTheme({ primaryColor: v })}
           />
           <ColorInput
-            label="Secondary"
+            label={t('themeEditor.secondary')}
             value={theme.secondaryColor}
             onChange={(v) => updateTheme({ secondaryColor: v })}
           />
           <ColorInput
-            label="Accent"
+            label={t('themeEditor.accent')}
             value={theme.accentColor}
             onChange={(v) => updateTheme({ accentColor: v })}
           />
           <ColorInput
-            label="Background"
+            label={t('themeEditor.background')}
             value={theme.backgroundColor}
             onChange={(v) => updateTheme({ backgroundColor: v })}
           />
           <ColorInput
-            label="Text"
+            label={t('themeEditor.text')}
             value={theme.textColor}
             onChange={(v) => updateTheme({ textColor: v })}
           />
@@ -177,7 +179,7 @@ export function ThemeEditor() {
       <div>
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
           <Type className="w-4 h-4" />
-          Typography
+          {t('themeEditor.typography')}
         </h4>
         <select
           value={theme.fontFamily}
@@ -195,7 +197,7 @@ export function ThemeEditor() {
       {/* Border Radius */}
       <div>
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
-          Border Radius
+          {t('themeEditor.borderRadius')}
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {radiusOptions.map((option) => (
@@ -208,7 +210,7 @@ export function ThemeEditor() {
                   : 'glass hover:bg-white/10'
               }`}
             >
-              {option.label}
+              {t(option.labelKey)}
             </button>
           ))}
         </div>

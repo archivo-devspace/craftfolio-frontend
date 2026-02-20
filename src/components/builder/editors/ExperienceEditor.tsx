@@ -2,6 +2,7 @@
 
 import { ExperienceSection, Experience } from '@/types/portfolio';
 import { Input } from '@/components/ui';
+import { useLocaleStore } from '@/store/localeStore';
 import { v4 as uuidv4 } from 'uuid';
 import { Trash2, Plus } from 'lucide-react';
 
@@ -12,16 +13,17 @@ interface Props {
 
 export function ExperienceEditor({ section, onChange }: Props) {
   const { data } = section;
+  const { t } = useLocaleStore();
 
   const addExperience = () => {
     const newExp: Experience = {
       id: uuidv4(),
-      company: 'Company Name',
-      position: 'Position',
+      company: t('editors.experience.newCompany'),
+      position: t('editors.experience.newPosition'),
       startDate: new Date().toISOString().split('T')[0],
       endDate: null,
       current: true,
-      description: 'Describe your role...',
+      description: t('editors.experience.newDescription'),
       achievements: [],
     };
     onChange('experiences', [...data.experiences, newExp]);
@@ -40,16 +42,16 @@ export function ExperienceEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Work Experience" />
+      <Input label={t('editors.experience.title')} value={data.title} onValueChange={(v) => onChange('title', v)} placeholder={t('editors.experience.titlePlaceholder')} />
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <label className="text-fog/70 text-sm font-medium">Experiences ({data.experiences.length})</label>
+          <label className="text-fog/70 text-sm font-medium">{t('editors.experience.experiences')} ({data.experiences.length})</label>
           <button
             onClick={addExperience}
             className="px-3 py-1 glass rounded-lg hover:bg-white/10 text-sm flex items-center gap-1"
           >
-            <Plus className="w-3 h-3" /> Add
+            <Plus className="w-3 h-3" /> {t('editors.experience.add')}
           </button>
         </div>
 
@@ -57,7 +59,7 @@ export function ExperienceEditor({ section, onChange }: Props) {
           {data.experiences.map((exp) => (
             <div key={exp.id} className="glass rounded-lg p-4">
               <div className="flex items-start justify-between mb-3">
-                <span className="text-xs text-fog/50">Experience</span>
+                <span className="text-xs text-fog/50">{t('editors.experience.experience')}</span>
                 <button
                   onClick={() => removeExperience(exp.id)}
                   className="p-1 hover:bg-red-500/20 rounded text-red-400"
@@ -71,14 +73,14 @@ export function ExperienceEditor({ section, onChange }: Props) {
                   type="text"
                   value={exp.position}
                   onChange={(e) => updateExperience(exp.id, 'position', e.target.value)}
-                  placeholder="Position"
+                  placeholder={t('editors.experience.positionPlaceholder')}
                   className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <input
                   type="text"
                   value={exp.company}
                   onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                  placeholder="Company"
+                  placeholder={t('editors.experience.companyPlaceholder')}
                   className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -103,12 +105,12 @@ export function ExperienceEditor({ section, onChange }: Props) {
                     onChange={(e) => updateExperience(exp.id, 'current', e.target.checked)}
                     className="rounded bg-white/5 border-white/10"
                   />
-                  Currently working here
+                  {t('editors.experience.currentlyWorking')}
                 </label>
                 <textarea
                   value={exp.description}
                   onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-                  placeholder="Description"
+                  placeholder={t('editors.experience.descriptionPlaceholder')}
                   rows={3}
                   className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm resize-none"
                 />

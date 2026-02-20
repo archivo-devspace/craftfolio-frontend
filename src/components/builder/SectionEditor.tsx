@@ -2,6 +2,7 @@
 
 import { usePortfolioStore } from '@/store/portfolioStore';
 import { Section, SectionType } from '@/types/portfolio';
+import { useLocaleStore } from '@/store/localeStore';
 import { X } from 'lucide-react';
 import {
   HeroEditor,
@@ -12,24 +13,25 @@ import {
   ContactEditor,
 } from './editors';
 
-const sectionLabels: Record<SectionType, string> = {
-  hero: 'Hero Section',
-  about: 'About Section',
-  projects: 'Projects Section',
-  skills: 'Skills Section',
-  experience: 'Experience Section',
-  contact: 'Contact Section',
+const sectionLabelKeys: Record<SectionType, string> = {
+  hero: 'sectionEditor.heroSection',
+  about: 'sectionEditor.aboutSection',
+  projects: 'sectionEditor.projectsSection',
+  skills: 'sectionEditor.skillsSection',
+  experience: 'sectionEditor.experienceSection',
+  contact: 'sectionEditor.contactSection',
 };
 
 export function SectionEditor() {
   const { portfolio, selectedSectionId, selectSection, updateSection } = usePortfolioStore();
+  const { t } = useLocaleStore();
 
   const section = portfolio.sections.find(s => s.id === selectedSectionId);
 
   if (!section) {
     return (
       <div className="h-full flex items-center justify-center text-fog/50 text-center p-6">
-        <p>Select a section to edit its content</p>
+        <p>{t('sectionEditor.selectSection')}</p>
       </div>
     );
   }
@@ -65,7 +67,7 @@ export function SectionEditor() {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">
         <h3 className="font-semibold text-cloud text-sm sm:text-base truncate pr-3">
-          {sectionLabels[section.type]}
+          {t(sectionLabelKeys[section.type])}
         </h3>
         <button
           onClick={() => selectSection(null)}

@@ -23,6 +23,11 @@ export function Sidebar() {
   const [showAddSection, setShowAddSection] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
 
   const {
     portfolio,
@@ -40,7 +45,7 @@ export function Sidebar() {
   } = usePortfolioStore();
 
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { t } = useLocaleStore();
+  const { t, locale } = useLocaleStore();
 
   const sortedSections = useMemo(
     () => [...portfolio.sections].sort((a, b) => a.order - b.order),
@@ -75,12 +80,15 @@ export function Sidebar() {
           const data = JSON.parse(text);
           loadPortfolio(data);
         } catch {
-          alert("Invalid portfolio file");
+          setDialogMessage({
+            title: t("settings.importErrorTitle"),
+            description: t("settings.invalidPortfolioFile"),
+          });
         }
       }
     };
     input.click();
-  }, [loadPortfolio]);
+  }, [loadPortfolio, t]);
 
   const handleSaveToBackend = useCallback(async () => {
     if (!isAuthenticated) {
@@ -108,20 +116,23 @@ export function Sidebar() {
         }
       }
     } catch {
-      throw new Error("Error saving portfolio");
+      throw new Error(t("settings.saveError"));
     }
-  }, [portfolio, isAuthenticated, loadPortfolio]);
+  }, [portfolio, isAuthenticated, loadPortfolio, t]);
 
   const handleReset = useCallback(() => {
-    if (confirm("Are you sure you want to reset? All changes will be lost.")) {
-      resetPortfolio();
-    }
-  }, [resetPortfolio]);
+    setShowResetConfirm(true);
+  }, []);
 
   const handleConfirmLogout = useCallback(() => {
     logout();
     setShowLogoutConfirm(false);
   }, [logout]);
+
+  const handleConfirmReset = useCallback(() => {
+    resetPortfolio();
+    setShowResetConfirm(false);
+  }, [resetPortfolio]);
 
   const handleTabChange = useCallback(
     (tab: TabType) => {
@@ -135,7 +146,11 @@ export function Sidebar() {
 
   return (
     <>
-      <div className="w-full h-[52dvh] shrink-0 bg-onyx border-b border-white/10 flex flex-col lg:w-80 lg:h-full lg:border-b-0 lg:border-r">
+      <div
+        className={`w-full h-[52dvh] shrink-0 bg-onyx border-b border-white/10 flex flex-col lg:w-80 lg:h-full lg:border-b-0 lg:border-r ${
+          locale === "mm" ? "mm-ui-font" : ""
+        }`}
+      >
         {/* Header */}
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center justify-between">
@@ -168,7 +183,9 @@ export function Sidebar() {
           {isAuthenticated && user && (
             <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
               <Cloud className="w-3 h-3" />
-              <span>{t("sidebar.signedInAs")} {user.email}</span>
+              <span>
+                {t("sidebar.signedInAs")} {user.email}
+              </span>
             </div>
           )}
         </div>
@@ -237,10 +254,15 @@ export function Sidebar() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
+        className={locale === "mm" ? "mm-ui-font" : ""}
       />
 
       {showLogoutConfirm && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4">
+        <div
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 ${
+            locale === "mm" ? "mm-ui-font" : ""
+          }`}
+        >
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setShowLogoutConfirm(false)}
@@ -266,6 +288,74 @@ export function Sidebar() {
                 className="flex-1 py-2.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors text-sm font-medium"
               >
                 {t("logout.confirm")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showResetConfirm && (
+        <div
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 ${
+            locale === "mm" ? "mm-ui-font" : ""
+          }`}
+        >
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowResetConfirm(false)}
+          />
+
+          <div className="relative w-full max-w-sm glass rounded-2xl border border-white/10 p-5 sm:p-6">
+            <h3 className="text-lg font-semibold text-cloud">
+              {t("settings.resetTitle")}
+            </h3>
+            <p className="mt-2 text-sm text-fog/70">
+              {t("settings.resetDescription")}
+            </p>
+
+            <div className="mt-5 flex gap-2">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 py-2.5 rounded-lg glass hover:bg-white/10 transition-colors text-sm"
+              >
+                {t("settings.cancel")}
+              </button>
+              <button
+                onClick={handleConfirmReset}
+                className="flex-1 py-2.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors text-sm font-medium"
+              >
+                {t("settings.confirmReset")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {dialogMessage && (
+        <div
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-6 ${
+            locale === "mm" ? "mm-ui-font" : ""
+          }`}
+        >
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            onClick={() => setDialogMessage(null)}
+          />
+
+          <div className="relative w-full max-w-3xl rounded-[2rem] border border-white/15 bg-[radial-gradient(130%_130%_at_100%_0%,rgba(40,233,140,0.14),rgba(17,24,39,0.88)_45%,rgba(2,6,23,0.94))] p-5 sm:p-8 shadow-[0_24px_80px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
+            <h3 className="text-2xl sm:text-4xl font-semibold leading-tight text-cloud">
+              {dialogMessage.title}
+            </h3>
+            <p className="mt-3 text-base sm:text-2xl text-fog/65">
+              {dialogMessage.description}
+            </p>
+
+            <div className="mt-6 sm:mt-8">
+              <button
+                onClick={() => setDialogMessage(null)}
+                className="w-full rounded-2xl bg-primary text-black hover:bg-primary/90 transition-colors text-xl sm:text-2xl font-medium py-3.5 sm:py-4"
+              >
+                {t("dialogs.ok")}
               </button>
             </div>
           </div>

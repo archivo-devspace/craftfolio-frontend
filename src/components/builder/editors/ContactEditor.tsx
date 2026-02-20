@@ -2,6 +2,7 @@
 
 import { ContactSection } from '@/types/portfolio';
 import { Input, TextArea } from '@/components/ui';
+import { useLocaleStore } from '@/store/localeStore';
 import { Plus, Trash2 } from 'lucide-react';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 export function ContactEditor({ section, onChange }: Props) {
   const { data } = section;
+  const { t } = useLocaleStore();
 
   const addSocial = () => {
     const newSocials = [...(data.socials || [])];
@@ -37,17 +39,17 @@ export function ContactEditor({ section, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Get In Touch" />
-      <Input label="Subtitle" value={data.subtitle} onValueChange={(v) => onChange('subtitle', v)} placeholder="Let's work together" />
-      <Input label="Email" value={data.email} onValueChange={(v) => onChange('email', v)} placeholder="your@email.com" type="email" />
-      <Input label="Phone" value={data.phone} onValueChange={(v) => onChange('phone', v)} placeholder="+1 234 567 890" />
-      <Input label="Location" value={data.location} onValueChange={(v) => onChange('location', v)} placeholder="City, Country" />
+      <Input label={t('editors.contact.title')} value={data.title} onValueChange={(v) => onChange('title', v)} placeholder={t('editors.contact.titlePlaceholder')} />
+      <Input label={t('editors.contact.subtitle')} value={data.subtitle} onValueChange={(v) => onChange('subtitle', v)} placeholder={t('editors.contact.subtitlePlaceholder')} />
+      <Input label={t('editors.contact.email')} value={data.email} onValueChange={(v) => onChange('email', v)} placeholder={t('editors.contact.emailPlaceholder')} type="email" />
+      <Input label={t('editors.contact.phone')} value={data.phone} onValueChange={(v) => onChange('phone', v)} placeholder={t('editors.contact.phonePlaceholder')} />
+      <Input label={t('editors.contact.location')} value={data.location} onValueChange={(v) => onChange('location', v)} placeholder={t('editors.contact.locationPlaceholder')} />
 
       <div className="border-t border-white/10 pt-4 mt-4">
-        <h4 className="text-sm font-medium mb-3 text-fog/70">Form Default Values</h4>
-        <Input label="Default Name" value={data.name} onValueChange={(v) => onChange('name', v)} placeholder="Your name" />
-        <Input label="Default Subject" value={data.formSubject} onValueChange={(v) => onChange('formSubject', v)} placeholder="Default subject line" />
-        <TextArea label="Default Message" value={data.formMessage} onValueChange={(v) => onChange('formMessage', v)} placeholder="Default message template" />
+        <h4 className="text-sm font-medium mb-3 text-fog/70">{t('editors.contact.formDefaultValues')}</h4>
+        <Input label={t('editors.contact.defaultName')} value={data.name} onValueChange={(v) => onChange('name', v)} placeholder={t('editors.contact.defaultNamePlaceholder')} />
+        <Input label={t('editors.contact.defaultSubject')} value={data.formSubject} onValueChange={(v) => onChange('formSubject', v)} placeholder={t('editors.contact.defaultSubjectPlaceholder')} />
+        <TextArea label={t('editors.contact.defaultMessage')} value={data.formMessage} onValueChange={(v) => onChange('formMessage', v)} placeholder={t('editors.contact.defaultMessagePlaceholder')} />
       </div>
 
       <div className="mb-4">
@@ -58,18 +60,18 @@ export function ContactEditor({ section, onChange }: Props) {
             onChange={(e) => onChange('showForm', e.target.checked)}
             className="rounded bg-white/5 border-white/10"
           />
-          Show contact form
+          {t('editors.contact.showContactForm')}
         </label>
       </div>
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <label className="text-fog/70 text-sm font-medium">Social Links</label>
+          <label className="text-fog/70 text-sm font-medium">{t('editors.contact.socialLinks')}</label>
           <button
             onClick={addSocial}
             className="px-3 py-1 glass rounded-lg hover:bg-white/10 text-sm flex items-center gap-1"
           >
-            <Plus className="w-3 h-3" /> Add
+            <Plus className="w-3 h-3" /> {t('editors.contact.add')}
           </button>
         </div>
 
@@ -81,17 +83,17 @@ export function ContactEditor({ section, onChange }: Props) {
                 onChange={(e) => updateSocialPlatform(idx, e.target.value)}
                 className="w-full sm:w-28 px-2 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
               >
-                <option value="github" className="bg-charcoal">GitHub</option>
-                <option value="linkedin" className="bg-charcoal">LinkedIn</option>
-                <option value="twitter" className="bg-charcoal">Twitter</option>
-                <option value="instagram" className="bg-charcoal">Instagram</option>
-                <option value="website" className="bg-charcoal">Website</option>
+                <option value="github" className="bg-charcoal">{t('editors.contact.platformGithub')}</option>
+                <option value="linkedin" className="bg-charcoal">{t('editors.contact.platformLinkedIn')}</option>
+                <option value="twitter" className="bg-charcoal">{t('editors.contact.platformTwitter')}</option>
+                <option value="instagram" className="bg-charcoal">{t('editors.contact.platformInstagram')}</option>
+                <option value="website" className="bg-charcoal">{t('editors.contact.platformWebsite')}</option>
               </select>
               <input
                 type="text"
                 value={social.url}
                 onChange={(e) => updateSocialUrl(idx, e.target.value)}
-                placeholder="URL"
+                placeholder={t('editors.contact.url')}
                 className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
               />
               <button

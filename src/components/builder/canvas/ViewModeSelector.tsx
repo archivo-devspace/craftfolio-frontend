@@ -1,6 +1,7 @@
 "use client";
 
 import { Monitor, Tablet, Smartphone } from "lucide-react";
+import { useLocaleStore } from "@/store/localeStore";
 
 interface Props {
   viewMode: "desktop" | "tablet" | "mobile";
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
+  const { t } = useLocaleStore();
+
   return (
     <div className="flex items-center gap-1 glass rounded-lg p-1">
       <button
@@ -15,7 +18,7 @@ export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
         className={`p-2 rounded transition-colors ${
           viewMode === "desktop" ? "bg-primary text-black" : "hover:bg-white/10"
         }`}
-        title="Desktop view"
+        title={t("viewMode.desktop")}
       >
         <Monitor className="w-4 h-4" />
       </button>
@@ -24,7 +27,7 @@ export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
         className={`p-2 rounded transition-colors ${
           viewMode === "tablet" ? "bg-primary text-black" : "hover:bg-white/10"
         }`}
-        title="Tablet view"
+        title={t("viewMode.tablet")}
       >
         <Tablet className="w-4 h-4" />
       </button>
@@ -33,7 +36,7 @@ export function ViewModeSelector({ viewMode, onViewModeChange }: Props) {
         className={`p-2 rounded transition-colors ${
           viewMode === "mobile" ? "bg-primary text-black" : "hover:bg-white/10"
         }`}
-        title="Mobile view"
+        title={t("viewMode.mobile")}
       >
         <Smartphone className="w-4 h-4" />
       </button>

@@ -1,15 +1,16 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { SectionType } from '@/types/portfolio';
+import { useLocaleStore } from '@/store/localeStore';
 import { Layout, User, FolderOpen, Code, Briefcase, Mail, GripVertical, Trash2, Eye, EyeOff, ChevronRight } from 'lucide-react';
 
-const sectionTypes: { type: SectionType; label: string; icon: typeof Layout }[] = [
-  { type: 'hero', label: 'Hero', icon: Layout },
-  { type: 'about', label: 'About', icon: User },
-  { type: 'projects', label: 'Projects', icon: FolderOpen },
-  { type: 'skills', label: 'Skills', icon: Code },
-  { type: 'experience', label: 'Experience', icon: Briefcase },
-  { type: 'contact', label: 'Contact', icon: Mail },
+const sectionTypes: { type: SectionType; labelKey: string; icon: typeof Layout }[] = [
+  { type: 'hero', labelKey: 'sections.hero', icon: Layout },
+  { type: 'about', labelKey: 'sections.about', icon: User },
+  { type: 'projects', labelKey: 'sections.projects', icon: FolderOpen },
+  { type: 'skills', labelKey: 'sections.skills', icon: Code },
+  { type: 'experience', labelKey: 'sections.experience', icon: Briefcase },
+  { type: 'contact', labelKey: 'sections.contact', icon: Mail },
 ];
 
 interface SortableSidebarItemProps {
@@ -21,6 +22,7 @@ interface SortableSidebarItemProps {
 }
 
 export function SortableSidebarItem({ section, index, onSelect, onRemove, onToggleVisibility }: SortableSidebarItemProps) {
+  const { t } = useLocaleStore();
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
 
   const style = {
@@ -52,9 +54,13 @@ export function SortableSidebarItem({ section, index, onSelect, onRemove, onTogg
         className={`flex-1 min-w-0 truncate text-sm ${section.visible ? 'text-fog/80 cursor-pointer hover:text-fog' : 'text-fog/40 cursor-not-allowed'}`}
         onClick={section.visible ? onSelect : undefined}
       >
-        {sectionInfo?.label || section.type}
+        {sectionInfo ? t(sectionInfo.labelKey) : section.type}
       </span>
-      <button onClick={onToggleVisibility} className="p-1 hover:bg-white/10 rounded transition-opacity" title={section.visible ? 'Hide section' : 'Show section'}>
+      <button
+        onClick={onToggleVisibility}
+        className="p-1 hover:bg-white/10 rounded transition-opacity"
+        title={section.visible ? t('sections.hideSection') : t('sections.showSection')}
+      >
         {section.visible ? <Eye className="w-4 h-4 text-fog/50" /> : <EyeOff className="w-4 h-4 text-fog/30" />}
       </button>
       <button onClick={onRemove} className="p-1 hover:bg-red-500/20 rounded text-red-400 transition-opacity">

@@ -93,7 +93,11 @@ export function CanvasToolbar({
   };
 
   return (
-    <div className="flex flex-col gap-3 px-4 py-3 border-b border-white/10 bg-onyx/50 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
+    <div
+      className={`flex flex-col gap-3 px-4 py-3 border-b border-white/10 bg-onyx/50 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between ${
+        locale === "mm" ? "mm-ui-font" : ""
+      }`}
+    >
       <div className="flex items-center justify-between sm:justify-start gap-2">
         {/* <div className="flex items-center gap-2">
           <span className="hidden text-fog/50 text-sm sm:inline">
