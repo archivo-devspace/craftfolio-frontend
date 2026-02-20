@@ -22,6 +22,7 @@ import {
 import { SortableSection } from "./SortableSection";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { CanvasToolbar } from "./CanvasToolbar";
+import { useLocaleStore } from "@/store/localeStore";
 
 type SaveStatus = "idle" | "success" | "error";
 type PublishStatus = "idle" | "success" | "error";
@@ -30,6 +31,7 @@ export function Canvas() {
   const { portfolio, reorderSections, selectSection, loadPortfolio } =
     usePortfolioStore();
   const { isAuthenticated } = useAuthStore();
+  const { t } = useLocaleStore();
   const [viewMode, setViewMode] = useState<"desktop" | "tablet" | "mobile">(
     "desktop",
   );
@@ -137,8 +139,8 @@ export function Canvas() {
     if (!portfolio.id) {
       setPublishState({ isPublishing: false, status: "error" });
       setDialogMessage({
-        title: "Save Portfolio First",
-        description: "Please save your portfolio before publishing.",
+        title: t("dialogs.saveFirstTitle"),
+        description: t("dialogs.saveFirstDescription"),
       });
       return;
     }
@@ -173,7 +175,7 @@ export function Canvas() {
       () => setPublishState((prev) => ({ ...prev, status: "idle" })),
       2000,
     );
-  }, [isAuthenticated, portfolio, loadPortfolio]);
+  }, [isAuthenticated, portfolio, loadPortfolio, t]);
 
   const handlePreview = useCallback(() => {
     if (portfolio.published) {
@@ -202,11 +204,11 @@ export function Canvas() {
       window.open(url, "_blank");
     } else {
       setDialogMessage({
-        title: "Publish Required",
-        description: "Please publish your portfolio first to view live site.",
+        title: t("dialogs.publishRequiredTitle"),
+        description: t("dialogs.publishRequiredDescription"),
       });
     }
-  }, [portfolio.published, portfolio.name, portfolio.slug, viewMode]);
+  }, [portfolio.published, portfolio.name, portfolio.slug, viewMode, t]);
 
   const sortedSections = [...portfolio.sections].sort(
     (a, b) => a.order - b.order,
@@ -300,7 +302,7 @@ export function Canvas() {
                 onClick={() => setDialogMessage(null)}
                 className="w-full py-2.5 rounded-lg bg-primary text-black hover:bg-primary/90 transition-colors text-sm font-medium"
               >
-                OK
+                {t("dialogs.ok")}
               </button>
             </div>
           </div>

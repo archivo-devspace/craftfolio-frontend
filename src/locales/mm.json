@@ -1,0 +1,51 @@
+{
+  "toolbar": {
+    "view": "မြင်ကွင်း:",
+    "save": "သိမ်းမည်",
+    "saving": "သိမ်းဆည်းနေသည်...",
+    "saved": "သိမ်းပြီး!",
+    "signInToSave": "သိမ်းရန် အကောင့်ဝင်ပါ",
+    "publish": "ထုတ်ပြန်မည်",
+    "unpublish": "ထုတ်ပြန်မှု ပိတ်မည်",
+    "publishing": "ထုတ်ပြန်နေသည်...",
+    "published": "ထုတ်ပြန်ပြီး!",
+    "unpublished": "မထုတ်ပြန်ထား",
+    "signInToPublish": "ထုတ်ပြန်ရန် အကောင့်ဝင်ပါ",
+    "liveSite": "တင်ထားသောဆိုဒ်",
+    "publishToView": "ကြည့်ရန် ထုတ်ပြန်ပါ",
+    "viewLiveSite": "တင်ထားသောဆိုဒ်ကို ကြည့်မည်",
+    "publishToViewLiveSite": "တင်ထားသောဆိုဒ်ကို ကြည့်ရန် ထုတ်ပြန်ပါ",
+    "openLivePreview": "live preview ကို tab အသစ်တွင် ဖွင့်မည်"
+  },
+  "language": {
+    "label": "ဘာသာစကား",
+    "en": "EN",
+    "mm": "MM"
+  },
+  "sidebar": {
+    "title": "Portfolio Builder",
+    "subtitle": "သင့် Portfolio ကို အလှဆုံး ဒီဇိုင်းလုပ်ပါ",
+    "loggedInAs": "ဝင်ထားသောအကောင့်",
+    "signedInAs": "အကောင့်ဝင်ထားသည်",
+    "addSection": "အပိုင်းထည့်မည်",
+    "signIn": "အကောင့်ဝင်မည်"
+  },
+  "tabs": {
+    "sections": "အပိုင်းများ",
+    "theme": "အပြင်အဆင်",
+    "settings": "ဆက်တင်"
+  },
+  "logout": {
+    "title": "အကောင့်မှ ထွက်မလား?",
+    "description": "ဤစက်မှ အကောင့်ထွက်ပါမည်။",
+    "cancel": "မလုပ်တော့",
+    "confirm": "ထွက်မည်"
+  },
+  "dialogs": {
+    "saveFirstTitle": "ပထမဦးစွာ သိမ်းဆည်းပါ",
+    "saveFirstDescription": "ထုတ်ပြန်မီ portfolio ကို အရင်သိမ်းပါ။",
+    "publishRequiredTitle": "ထုတ်ပြန်ရန် လိုအပ်သည်",
+    "publishRequiredDescription": "Live site ကြည့်ရန် portfolio ကို ထုတ်ပြန်ပါ။",
+    "ok": "အိုကေ"
+  }
+}

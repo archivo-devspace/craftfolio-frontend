@@ -14,6 +14,7 @@ import {
   SettingsPanel,
 } from "./sidebar-components";
 import { LogIn, LogOut, Cloud, Plus } from "lucide-react";
+import { useLocaleStore } from "@/store/localeStore";
 
 type TabType = "sections" | "theme" | "settings";
 
@@ -39,6 +40,7 @@ export function Sidebar() {
   } = usePortfolioStore();
 
   const { user, isAuthenticated, logout } = useAuthStore();
+  const { t } = useLocaleStore();
 
   const sortedSections = useMemo(
     () => [...portfolio.sections].sort((a, b) => a.order - b.order),
@@ -139,17 +141,17 @@ export function Sidebar() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-primary">
-                Portfolio Builder
+                {t("sidebar.title")}
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                Design your perfect portfolio
+                {t("sidebar.subtitle")}
               </p>
             </div>
             {isAuthenticated ? (
               <button
                 onClick={() => setShowLogoutConfirm(true)}
                 className="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
-                title={`Logged in as ${user?.email}`}
+                title={`${t("sidebar.loggedInAs")}: ${user?.email}`}
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -157,7 +159,7 @@ export function Sidebar() {
               <button
                 onClick={() => setShowAuthModal(true)}
                 className="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
-                title="Sign in"
+                title={t("sidebar.signIn")}
               >
                 <LogIn className="w-4 h-4" />
               </button>
@@ -166,7 +168,7 @@ export function Sidebar() {
           {isAuthenticated && user && (
             <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
               <Cloud className="w-3 h-3" />
-              <span>Signed in as {user.email}</span>
+              <span>{t("sidebar.signedInAs")} {user.email}</span>
             </div>
           )}
         </div>
@@ -196,7 +198,7 @@ export function Sidebar() {
                       className="w-full py-3 glass rounded-lg hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
                     >
                       <Plus className="w-4 h-4" />
-                      <span className="text-sm">Add Section</span>
+                      <span className="text-sm">{t("sidebar.addSection")}</span>
                     </button>
 
                     <AddSectionPanel
@@ -245,9 +247,11 @@ export function Sidebar() {
           />
 
           <div className="relative w-full max-w-sm glass rounded-2xl border border-white/10 p-5 sm:p-6">
-            <h3 className="text-lg font-semibold text-cloud">Log out?</h3>
+            <h3 className="text-lg font-semibold text-cloud">
+              {t("logout.title")}
+            </h3>
             <p className="mt-2 text-sm text-fog/70">
-              You will be signed out from this device.
+              {t("logout.description")}
             </p>
 
             <div className="mt-5 flex gap-2">
@@ -255,13 +259,13 @@ export function Sidebar() {
                 onClick={() => setShowLogoutConfirm(false)}
                 className="flex-1 py-2.5 rounded-lg glass hover:bg-white/10 transition-colors text-sm"
               >
-                Cancel
+                {t("logout.cancel")}
               </button>
               <button
                 onClick={handleConfirmLogout}
                 className="flex-1 py-2.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors text-sm font-medium"
               >
-                Log out
+                {t("logout.confirm")}
               </button>
             </div>
           </div>

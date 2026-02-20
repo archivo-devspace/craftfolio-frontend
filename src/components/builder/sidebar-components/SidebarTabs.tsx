@@ -1,4 +1,5 @@
 import { Layers, Palette, Settings } from "lucide-react";
+import { useLocaleStore } from "@/store/localeStore";
 
 type TabType = "sections" | "theme" | "settings";
 
@@ -8,10 +9,12 @@ interface SidebarTabsProps {
 }
 
 export function SidebarTabs({ activeTab, onTabChange }: SidebarTabsProps) {
+  const { t } = useLocaleStore();
+
   const tabs = [
-    { id: "sections" as TabType, label: "Sections", icon: Layers },
-    { id: "theme" as TabType, label: "Theme", icon: Palette },
-    { id: "settings" as TabType, label: "Settings", icon: Settings },
+    { id: "sections" as TabType, label: t("tabs.sections"), icon: Layers },
+    { id: "theme" as TabType, label: t("tabs.theme"), icon: Palette },
+    { id: "settings" as TabType, label: t("tabs.settings"), icon: Settings },
   ];
 
   return (

@@ -1,0 +1,51 @@
+{
+  "toolbar": {
+    "view": "View:",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved!",
+    "signInToSave": "Sign in to Save",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "publishing": "Publishing...",
+    "published": "Published!",
+    "unpublished": "Unpublished",
+    "signInToPublish": "Sign in to Publish",
+    "liveSite": "Live Site",
+    "publishToView": "Publish to view",
+    "viewLiveSite": "View Live Site",
+    "publishToViewLiveSite": "Publish to view live site",
+    "openLivePreview": "Open live preview in new tab"
+  },
+  "language": {
+    "label": "Language",
+    "en": "EN",
+    "mm": "MM"
+  },
+  "sidebar": {
+    "title": "Portfolio Builder",
+    "subtitle": "Design your perfect portfolio",
+    "loggedInAs": "Logged in as",
+    "signedInAs": "Signed in as",
+    "addSection": "Add Section",
+    "signIn": "Sign in"
+  },
+  "tabs": {
+    "sections": "Sections",
+    "theme": "Theme",
+    "settings": "Settings"
+  },
+  "logout": {
+    "title": "Log out?",
+    "description": "You will be signed out from this device.",
+    "cancel": "Cancel",
+    "confirm": "Log out"
+  },
+  "dialogs": {
+    "saveFirstTitle": "Save Portfolio First",
+    "saveFirstDescription": "Please save your portfolio before publishing.",
+    "publishRequiredTitle": "Publish Required",
+    "publishRequiredDescription": "Please publish your portfolio first to view live site.",
+    "ok": "OK"
+  }
+}
