@@ -104,14 +104,14 @@ export function ThemeEditor() {
   };
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="space-y-6">
       {/* Preset Themes */}
       <div>
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
           <Palette className="w-4 h-4" />
           Preset Themes
         </h4>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {presetThemes.map((preset) => (
             <button
               key={preset.name}
@@ -197,7 +197,7 @@ export function ThemeEditor() {
         <h4 className="text-sm font-medium text-fog/70 mb-3 flex items-center gap-2">
           Border Radius
         </h4>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {radiusOptions.map((option) => (
             <button
               key={option.value}
@@ -234,7 +234,7 @@ function ColorInput({
         onChange={(e) => onChange(e.target.value)}
         className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent"
       />
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         <span className="text-xs text-fog/50">{label}</span>
         <input
           type="text"

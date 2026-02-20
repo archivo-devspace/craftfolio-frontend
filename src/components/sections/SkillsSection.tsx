@@ -26,7 +26,7 @@ export function SkillsSection({ section, isEditing }: Props) {
 
   return (
     <section
-      className="py-28 px-6 relative overflow-hidden"
+      className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative overflow-hidden"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -73,9 +73,9 @@ export function SkillsSection({ section, isEditing }: Props) {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2
-            className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight"
             style={{ color: theme.textColor }}
           >
             {data.title || 'Skills & Technologies'}
@@ -85,7 +85,7 @@ export function SkillsSection({ section, isEditing }: Props) {
             style={{ backgroundColor: theme.primaryColor }}
           />
           <p
-            className="text-lg max-w-2xl mx-auto opacity-70"
+            className="text-base sm:text-lg max-w-2xl mx-auto opacity-70"
             style={{ color: `${theme.textColor}80` }}
           >
             {data.subtitle || 'Technologies I work with'}
@@ -94,11 +94,11 @@ export function SkillsSection({ section, isEditing }: Props) {
 
         {/* Skills Grid - Each Category in Own Card */}
         {data.skills && data.skills.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8">
             {Object.entries(groupedSkills).map(([category, skills]) => (
               <div
                 key={category}
-                className="p-8 relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
+                className="p-5 sm:p-8 relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
                 style={{
                   backgroundColor: theme.backgroundColor,
                   borderRadius: radius,
@@ -115,7 +115,7 @@ export function SkillsSection({ section, isEditing }: Props) {
 
                 <div className="relative z-10">
                   <h3
-                    className="text-xl font-bold mb-6 flex items-center gap-3"
+                    className="text-lg sm:text-xl font-bold mb-5 sm:mb-6 flex items-center gap-3"
                     style={{ color: theme.textColor }}
                   >
                     <div
@@ -129,7 +129,7 @@ export function SkillsSection({ section, isEditing }: Props) {
                     {category}
                   </h3>
 
-                  <div className="space-y-5">
+                  <div className="space-y-4 sm:space-y-5">
                     {skills.map((skill) => (
                       <div key={skill.id} className="group">
                         <div className="flex justify-between items-center mb-2">

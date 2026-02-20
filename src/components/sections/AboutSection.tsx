@@ -16,7 +16,7 @@ export function AboutSection({ section, isEditing }: Props) {
 
   return (
     <section
-      className="py-28 px-6 relative overflow-hidden"
+      className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative overflow-hidden"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -63,9 +63,9 @@ export function AboutSection({ section, isEditing }: Props) {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2
-            className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight"
             style={{ color: theme.textColor }}
           >
             {data.title || 'About Me'}
@@ -76,9 +76,9 @@ export function AboutSection({ section, isEditing }: Props) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* Image Column with sophisticated styling */}
-          <div className="relative order-2 md:order-1">
+          <div className="relative order-2 lg:order-1">
             {/* Decorative elements behind image */}
             <div
               className="absolute inset-0 rounded-3xl transform rotate-3 opacity-20"
@@ -108,15 +108,15 @@ export function AboutSection({ section, isEditing }: Props) {
               ) : (
                 <div className="text-center p-10">
                   <div
-                    className="w-28 h-28 mx-auto mb-6 rounded-full flex items-center justify-center shadow-lg"
+                    className="w-20 h-20 sm:w-28 sm:h-28 mx-auto mb-4 sm:mb-6 rounded-full flex items-center justify-center shadow-lg"
                     style={{
                       background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.accentColor})`,
                     }}
                   >
-                    <User className="w-14 h-14 text-black" />
+                    <User className="w-10 h-10 sm:w-14 sm:h-14 text-black" />
                   </div>
                   <p
-                    className="text-lg font-medium"
+                    className="text-base sm:text-lg font-medium"
                     style={{ color: `${theme.textColor}60` }}
                   >
                     {isEditing ? 'Add your photo' : ''}
@@ -127,16 +127,16 @@ export function AboutSection({ section, isEditing }: Props) {
           </div>
 
           {/* Content Column */}
-          <div className="order-1 md:order-2">
+          <div className="order-1 lg:order-2">
             <h3
-              className="text-2xl font-semibold mb-6"
+              className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6"
               style={{ color: theme.textColor }}
             >
               Get to know me
             </h3>
 
             <p
-              className="text-lg leading-relaxed mb-8"
+              className="text-base sm:text-lg leading-relaxed mb-6 sm:mb-8"
               style={{ color: `${theme.textColor}80` }}
             >
               {data.description || (isEditing ? 'Tell your story here...' : '')}
@@ -144,11 +144,11 @@ export function AboutSection({ section, isEditing }: Props) {
 
             {/* Highlights with improved styling */}
             {data.highlights && data.highlights.length > 0 && (
-              <div className="flex flex-wrap gap-3 mb-10">
+              <div className="flex flex-wrap gap-2 sm:gap-3 mb-8 sm:mb-10">
                 {data.highlights.map((highlight, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 font-medium transition-all hover:shadow-md"
+                    className="px-3 sm:px-4 py-2 text-sm sm:text-base font-medium transition-all hover:shadow-md"
                     style={{
                       backgroundColor: `${theme.primaryColor}15`,
                       color: theme.primaryColor,
@@ -164,17 +164,17 @@ export function AboutSection({ section, isEditing }: Props) {
 
             {/* Stats with cards */}
             {(data.yearsExperience || data.projectsCount || data.clientsCount) && (
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 {data.yearsExperience && (
                   <div
-                    className="text-center p-4 rounded-xl transition-all hover:shadow-lg"
+                    className="text-center p-3 sm:p-4 rounded-xl transition-all hover:shadow-lg"
                     style={{
                       backgroundColor: `${theme.primaryColor}10`,
                       border: `1px solid ${theme.primaryColor}20`,
                     }}
                   >
                     <div
-                      className="text-3xl font-bold mb-1"
+                      className="text-2xl sm:text-3xl font-bold mb-1"
                       style={{ color: theme.primaryColor }}
                     >
                       {data.yearsExperience}
@@ -189,14 +189,14 @@ export function AboutSection({ section, isEditing }: Props) {
                 )}
                 {data.projectsCount && (
                   <div
-                    className="text-center p-4 rounded-xl transition-all hover:shadow-lg"
+                    className="text-center p-3 sm:p-4 rounded-xl transition-all hover:shadow-lg"
                     style={{
                       backgroundColor: `${theme.accentColor}10`,
                       border: `1px solid ${theme.accentColor}20`,
                     }}
                   >
                     <div
-                      className="text-3xl font-bold mb-1"
+                      className="text-2xl sm:text-3xl font-bold mb-1"
                       style={{ color: theme.accentColor }}
                     >
                       {data.projectsCount}
@@ -211,14 +211,14 @@ export function AboutSection({ section, isEditing }: Props) {
                 )}
                 {data.clientsCount && (
                   <div
-                    className="text-center p-4 rounded-xl transition-all hover:shadow-lg"
+                    className="text-center p-3 sm:p-4 rounded-xl transition-all hover:shadow-lg"
                     style={{
                       backgroundColor: `${theme.secondaryColor}10`,
                       border: `1px solid ${theme.secondaryColor}20`,
                     }}
                   >
                     <div
-                      className="text-3xl font-bold mb-1"
+                      className="text-2xl sm:text-3xl font-bold mb-1"
                       style={{ color: theme.secondaryColor }}
                     >
                       {data.clientsCount}

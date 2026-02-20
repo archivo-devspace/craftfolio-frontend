@@ -63,7 +63,7 @@ export function ContactEditor({ section, onChange }: Props) {
       </div>
 
       <div className="border-t border-white/10 pt-4">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
           <label className="text-fog/70 text-sm font-medium">Social Links</label>
           <button
             onClick={addSocial}
@@ -75,11 +75,11 @@ export function ContactEditor({ section, onChange }: Props) {
 
         <div className="space-y-2">
           {(data.socials || []).map((social, idx) => (
-            <div key={idx} className="flex items-center gap-2">
+            <div key={idx} className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <select
                 value={social.platform}
                 onChange={(e) => updateSocialPlatform(idx, e.target.value)}
-                className="w-28 px-2 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
+                className="w-full sm:w-28 px-2 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
               >
                 <option value="github" className="bg-charcoal">GitHub</option>
                 <option value="linkedin" className="bg-charcoal">LinkedIn</option>
@@ -96,7 +96,7 @@ export function ContactEditor({ section, onChange }: Props) {
               />
               <button
                 onClick={() => removeSocial(idx)}
-                className="p-2 hover:bg-red-500/20 rounded text-red-400"
+                className="self-end sm:self-auto p-2 hover:bg-red-500/20 rounded text-red-400"
               >
                 <Trash2 className="w-4 h-4" />
               </button>

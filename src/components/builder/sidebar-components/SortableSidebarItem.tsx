@@ -46,10 +46,10 @@ export function SortableSidebarItem({ section, index, onSelect, onRemove, onTogg
       >
         <GripVertical className={`w-4 h-4 ${section.visible ? 'text-fog/50' : 'text-fog/30'}`} />
       </button>
-      <span className="text-fog/50 text-sm w-4">{index + 1}</span>
+      <span className="hidden sm:inline text-fog/50 text-sm w-4">{index + 1}</span>
       <Icon className={`w-4 h-4 ${section.visible ? 'text-primary' : 'text-fog/30'}`} />
       <span
-        className={`flex-1 text-sm ${section.visible ? 'text-fog/80 cursor-pointer hover:text-fog' : 'text-fog/40 cursor-not-allowed'}`}
+        className={`flex-1 min-w-0 truncate text-sm ${section.visible ? 'text-fog/80 cursor-pointer hover:text-fog' : 'text-fog/40 cursor-not-allowed'}`}
         onClick={section.visible ? onSelect : undefined}
       >
         {sectionInfo?.label || section.type}
@@ -60,7 +60,7 @@ export function SortableSidebarItem({ section, index, onSelect, onRemove, onTogg
       <button onClick={onRemove} className="p-1 hover:bg-red-500/20 rounded text-red-400 transition-opacity">
         <Trash2 className="w-4 h-4" />
       </button>
-      <button onClick={onSelect} className={`p-1 hover:bg-white/10 rounded ${section.visible ? 'text-fog/30 cursor-pointer' : 'text-fog/20'}`}>
+      <button onClick={onSelect} className={`hidden sm:inline p-1 hover:bg-white/10 rounded ${section.visible ? 'text-fog/30 cursor-pointer' : 'text-fog/20'}`}>
         <ChevronRight className="w-4 h-4 text-fog/50" />
       </button>
     </div>

@@ -43,7 +43,7 @@ export function ExperienceEditor({ section, onChange }: Props) {
       <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Work Experience" />
 
       <div className="border-t border-white/10 pt-4">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
           <label className="text-fog/70 text-sm font-medium">Experiences ({data.experiences.length})</label>
           <button
             onClick={addExperience}
@@ -81,7 +81,7 @@ export function ExperienceEditor({ section, onChange }: Props) {
                   placeholder="Company"
                   className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <input
                     type="date"
                     value={exp.startDate}

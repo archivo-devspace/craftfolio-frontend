@@ -64,7 +64,9 @@ export function SectionEditor() {
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">
-        <h3 className="font-semibold text-cloud">{sectionLabels[section.type]}</h3>
+        <h3 className="font-semibold text-cloud text-sm sm:text-base truncate pr-3">
+          {sectionLabels[section.type]}
+        </h3>
         <button
           onClick={() => selectSection(null)}
           className="p-1 hover:bg-white/10 rounded transition-colors"
@@ -74,7 +76,7 @@ export function SectionEditor() {
       </div>
 
       {/* Editor Content */}
-      <div className="flex-1 overflow-y-auto p-4 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 scrollbar-thin">
         {renderEditor()}
       </div>
     </div>

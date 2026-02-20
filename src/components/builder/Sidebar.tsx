@@ -1,21 +1,27 @@
-'use client';
+"use client";
 
-import { useState, useCallback, useMemo } from 'react';
-import { usePortfolioStore } from '@/store/portfolioStore';
-import { useAuthStore } from '@/store/authStore';
-import { api } from '@/lib/api';
-import { SectionEditor } from './SectionEditor';
-import { ThemeEditor } from './ThemeEditor';
-import { AuthModal } from '@/components/auth/AuthModal';
-import { SidebarTabs, SectionList, AddSectionPanel, SettingsPanel } from './sidebar-components';
-import { LogIn, LogOut, Cloud, Plus } from 'lucide-react';
+import { useState, useCallback, useMemo } from "react";
+import { usePortfolioStore } from "@/store/portfolioStore";
+import { useAuthStore } from "@/store/authStore";
+import { api } from "@/lib/api";
+import { SectionEditor } from "./SectionEditor";
+import { ThemeEditor } from "./ThemeEditor";
+import { AuthModal } from "@/components/auth/AuthModal";
+import {
+  SidebarTabs,
+  SectionList,
+  AddSectionPanel,
+  SettingsPanel,
+} from "./sidebar-components";
+import { LogIn, LogOut, Cloud, Plus } from "lucide-react";
 
-type TabType = 'sections' | 'theme' | 'settings';
+type TabType = "sections" | "theme" | "settings";
 
 export function Sidebar() {
-  const [activeTab, setActiveTab] = useState<TabType>('sections');
+  const [activeTab, setActiveTab] = useState<TabType>("sections");
   const [showAddSection, setShowAddSection] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const {
     portfolio,
@@ -34,31 +40,31 @@ export function Sidebar() {
 
   const { user, isAuthenticated, logout } = useAuthStore();
 
-  const sortedSections = useMemo(() =>
-    [...portfolio.sections].sort((a, b) => a.order - b.order),
-    [portfolio.sections]
+  const sortedSections = useMemo(
+    () => [...portfolio.sections].sort((a, b) => a.order - b.order),
+    [portfolio.sections],
   );
 
-  const existingSectionTypes = useMemo(() =>
-    new Set(portfolio.sections.map(s => s.type)),
-    [portfolio.sections]
+  const existingSectionTypes = useMemo(
+    () => new Set(portfolio.sections.map((s) => s.type)),
+    [portfolio.sections],
   );
 
   const handleExport = useCallback(() => {
     const json = getPortfolioJson();
-    const blob = new Blob([json], { type: 'application/json' });
+    const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `${portfolio.slug || 'portfolio'}.json`;
+    a.download = `${portfolio.slug || "portfolio"}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }, [getPortfolioJson, portfolio.slug]);
 
   const handleImport = useCallback(() => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
     input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
@@ -67,7 +73,7 @@ export function Sidebar() {
           const data = JSON.parse(text);
           loadPortfolio(data);
         } catch {
-          alert('Invalid portfolio file');
+          alert("Invalid portfolio file");
         }
       }
     };
@@ -84,7 +90,10 @@ export function Sidebar() {
       const portfolioData = {
         name: portfolio.name,
         slug: portfolio.slug,
-        theme: JSON.parse(JSON.stringify(portfolio.theme)) as Record<string, unknown>,
+        theme: JSON.parse(JSON.stringify(portfolio.theme)) as Record<
+          string,
+          unknown
+        >,
         sections: JSON.parse(JSON.stringify(portfolio.sections)) as unknown[],
       };
 
@@ -97,29 +106,48 @@ export function Sidebar() {
         }
       }
     } catch {
-      throw new Error('Error saving portfolio');
+      throw new Error("Error saving portfolio");
     }
   }, [portfolio, isAuthenticated, loadPortfolio]);
 
   const handleReset = useCallback(() => {
-    if (confirm('Are you sure you want to reset? All changes will be lost.')) {
+    if (confirm("Are you sure you want to reset? All changes will be lost.")) {
       resetPortfolio();
     }
   }, [resetPortfolio]);
 
+  const handleConfirmLogout = useCallback(() => {
+    logout();
+    setShowLogoutConfirm(false);
+  }, [logout]);
+
+  const handleTabChange = useCallback(
+    (tab: TabType) => {
+      setActiveTab(tab);
+      if (tab !== "sections") {
+        selectSection(null);
+      }
+    },
+    [selectSection],
+  );
+
   return (
     <>
-      <div className="w-80 h-full bg-onyx border-r border-white/10 flex flex-col">
+      <div className="w-full h-[52dvh] shrink-0 bg-onyx border-b border-white/10 flex flex-col lg:w-80 lg:h-full lg:border-b-0 lg:border-r">
         {/* Header */}
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold text-primary">Portfolio Builder</h2>
-              <p className="text-xs text-muted-foreground mt-1">Design your perfect portfolio</p>
+              <h2 className="text-xl font-bold text-primary">
+                Portfolio Builder
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                Design your perfect portfolio
+              </p>
             </div>
             {isAuthenticated ? (
               <button
-                onClick={logout}
+                onClick={() => setShowLogoutConfirm(true)}
                 className="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
                 title={`Logged in as ${user?.email}`}
               >
@@ -144,11 +172,11 @@ export function Sidebar() {
         </div>
 
         {/* Tabs */}
-        <SidebarTabs activeTab={activeTab} onTabChange={setActiveTab} />
+        <SidebarTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
         {/* Content */}
-        <div className="flex-1 overflow-hidden">
-          {activeTab === 'sections' && (
+        <div className="flex-1 min-h-0 overflow-hidden">
+          {activeTab === "sections" && (
             <div className="h-full flex flex-col">
               {selectedSectionId ? (
                 <SectionEditor />
@@ -183,13 +211,13 @@ export function Sidebar() {
             </div>
           )}
 
-          {activeTab === 'theme' && (
-            <div className="h-full overflow-y-auto scrollbar-thin">
+          {activeTab === "theme" && (
+            <div className="h-full overflow-y-auto p-4 scrollbar-thin">
               <ThemeEditor />
             </div>
           )}
 
-          {activeTab === 'settings' && (
+          {activeTab === "settings" && (
             <SettingsPanel
               portfolio={portfolio}
               isAuthenticated={isAuthenticated}
@@ -204,7 +232,41 @@ export function Sidebar() {
         </div>
       </div>
 
-      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
+
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowLogoutConfirm(false)}
+          />
+
+          <div className="relative w-full max-w-sm glass rounded-2xl border border-white/10 p-5 sm:p-6">
+            <h3 className="text-lg font-semibold text-cloud">Log out?</h3>
+            <p className="mt-2 text-sm text-fog/70">
+              You will be signed out from this device.
+            </p>
+
+            <div className="mt-5 flex gap-2">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 py-2.5 rounded-lg glass hover:bg-white/10 transition-colors text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmLogout}
+                className="flex-1 py-2.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors text-sm font-medium"
+              >
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

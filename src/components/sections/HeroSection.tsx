@@ -17,7 +17,7 @@ export function HeroSection({ section, isEditing }: Props) {
 
   return (
     <div
-      className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden py-12 sm:py-16"
       style={{
         backgroundColor: theme.backgroundColor,
         fontFamily: theme.fontFamily,
@@ -59,11 +59,11 @@ export function HeroSection({ section, isEditing }: Props) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto w-full">
       
 
         {/* Avatar with sophisticated glow */}
-        <div className="mb-8 relative">
+        <div className="mb-6 sm:mb-8 relative">
           {/* Multiple glow layers */}
           <div
             className="absolute inset-0 rounded-full blur-2xl opacity-20 animate-pulse"
@@ -87,7 +87,7 @@ export function HeroSection({ section, isEditing }: Props) {
               style={{ borderRadius: '50%' }}
             >
               <div
-                className="w-36 h-36 rounded-full overflow-hidden ring-4"
+                className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-4"
                 style={{
                   borderColor: `${theme.primaryColor}40`,
                 }}
@@ -101,7 +101,7 @@ export function HeroSection({ section, isEditing }: Props) {
             </div>
           ) : (
             <div
-              className="inline-flex items-center justify-center w-36 h-36 relative shadow-2xl"
+              className="inline-flex items-center justify-center w-28 h-28 sm:w-36 sm:h-36 relative shadow-2xl"
               style={{
                 backgroundColor: `${theme.primaryColor}10`,
                 borderRadius: '50%',
@@ -109,7 +109,7 @@ export function HeroSection({ section, isEditing }: Props) {
               }}
             >
               <UserRound
-                className="w-20 h-20"
+                className="w-14 h-14 sm:w-20 sm:h-20"
                 style={{ color: theme.primaryColor }}
               />
             </div>
@@ -118,7 +118,7 @@ export function HeroSection({ section, isEditing }: Props) {
 
         {/* Name with gradient text effect */}
         <h1
-          className="text-5xl md:text-7xl font-bold mb-4 tracking-tight leading-tight"
+          className="text-3xl sm:text-5xl md:text-7xl font-bold mb-3 sm:mb-4 tracking-tight leading-tight"
           style={{ color: theme.textColor }}
         >
           {data.name || (isEditing ? 'Your Name' : '')}
@@ -126,7 +126,7 @@ export function HeroSection({ section, isEditing }: Props) {
 
         {/* Title with accent */}
         <p
-          className="text-2xl md:text-3xl font-semibold mb-6"
+          className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6"
           style={{ color: theme.primaryColor }}
         >
           {data.title || (isEditing ? 'Your Title' : '')}
@@ -134,16 +134,16 @@ export function HeroSection({ section, isEditing }: Props) {
 
         {/* Subtitle */}
         <p
-          className="text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed opacity-70"
+          className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed opacity-70"
           style={{ color: theme.textColor }}
         >
           {data.subtitle || (isEditing ? 'Add a catchy subtitle' : '')}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex w-full flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <button
-            className="px-10 py-4 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group"
+            className="w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group"
             style={{
               backgroundColor: theme.primaryColor,
               color: '#000',
@@ -169,7 +169,7 @@ export function HeroSection({ section, isEditing }: Props) {
             </span>
           </button>
           <button
-            className="px-10 py-4 font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
+            className="w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
             style={{
               backgroundColor: 'transparent',
               color: theme.textColor,
@@ -186,7 +186,7 @@ export function HeroSection({ section, isEditing }: Props) {
 
       {/* Scroll indicator */}
       <div
-        className=" mt-10 left-1/2 -translate-x-1/2"
+        className="mt-8 sm:mt-10"
         style={{ color: theme.primaryColor }}
       >
         <div className="flex flex-col items-center gap-2">

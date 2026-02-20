@@ -18,7 +18,7 @@ export function AboutEditor({ section, onChange }: Props) {
       <TextArea label="Description" value={data.description} onValueChange={(v) => onChange('description', v)} rows={6} placeholder="Write about yourself..." />
       <Input label="Image URL" value={data.imageUrl} onValueChange={(v) => onChange('imageUrl', v)} placeholder="https://example.com/photo.jpg" />
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         <Input label="Years Exp." value={data.yearsExperience || ''} onValueChange={(v) => onChange('yearsExperience', v)} placeholder="5+" />
         <Input label="Projects" value={data.projectsCount || ''} onValueChange={(v) => onChange('projectsCount', v)} placeholder="50+" />
         <Input label="Clients" value={data.clientsCount || ''} onValueChange={(v) => onChange('clientsCount', v)} placeholder="30+" />

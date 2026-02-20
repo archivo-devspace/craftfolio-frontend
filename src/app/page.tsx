@@ -31,7 +31,10 @@ export default function Home() {
   }
 
   return (
-    <main className="h-screen flex overflow-hidden" style={themeStyles}>
+    <main
+      className="h-[100dvh] flex flex-col overflow-hidden lg:flex-row"
+      style={themeStyles}
+    >
       <Sidebar />
       <Canvas />
     </main>

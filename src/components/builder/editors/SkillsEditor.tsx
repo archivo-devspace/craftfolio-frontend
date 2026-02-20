@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { SkillsSection, Skill } from '@/types/portfolio';
-import { Input } from '@/components/ui';
-import { v4 as uuidv4 } from 'uuid';
-import { Trash2, Plus } from 'lucide-react';
+import { SkillsSection, Skill } from "@/types/portfolio";
+import { Input } from "@/components/ui";
+import { v4 as uuidv4 } from "uuid";
+import { Trash2, Plus } from "lucide-react";
 
 interface Props {
   section: SkillsSection;
@@ -16,32 +16,47 @@ export function SkillsEditor({ section, onChange }: Props) {
   const addSkill = () => {
     const newSkill: Skill = {
       id: uuidv4(),
-      name: 'New Skill',
+      name: "New Skill",
       level: 80,
-      category: 'General',
+      category: "General",
     };
-    onChange('skills', [...data.skills, newSkill]);
+    onChange("skills", [...data.skills, newSkill]);
   };
 
   const updateSkill = (id: string, key: string, value: unknown) => {
-    const newSkills = data.skills.map(s =>
-      s.id === id ? { ...s, [key]: value } : s
+    const newSkills = data.skills.map((s) =>
+      s.id === id ? { ...s, [key]: value } : s,
     );
-    onChange('skills', newSkills);
+    onChange("skills", newSkills);
   };
 
   const removeSkill = (id: string) => {
-    onChange('skills', data.skills.filter(s => s.id !== id));
+    onChange(
+      "skills",
+      data.skills.filter((s) => s.id !== id),
+    );
   };
 
   return (
     <div className="space-y-4">
-      <Input label="Title" value={data.title} onValueChange={(v) => onChange('title', v)} placeholder="Skills" />
-      <Input label="Subtitle" value={data.subtitle} onValueChange={(v) => onChange('subtitle', v)} placeholder="Technologies I work with" />
+      <Input
+        label="Title"
+        value={data.title}
+        onValueChange={(v) => onChange("title", v)}
+        placeholder="Skills"
+      />
+      <Input
+        label="Subtitle"
+        value={data.subtitle}
+        onValueChange={(v) => onChange("subtitle", v)}
+        placeholder="Technologies I work with"
+      />
 
       <div className="border-t border-white/10 pt-4">
-        <div className="flex items-center justify-between mb-4">
-          <label className="text-fog/70 text-sm font-medium">Skills ({data.skills.length})</label>
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <label className="text-fog/70 text-sm font-medium">
+            Skills ({data.skills.length})
+          </label>
           <button
             onClick={addSkill}
             className="px-3 py-1 glass rounded-lg hover:bg-white/10 text-sm flex items-center gap-1"
@@ -57,7 +72,9 @@ export function SkillsEditor({ section, onChange }: Props) {
                 <input
                   type="text"
                   value={skill.name}
-                  onChange={(e) => updateSkill(skill.id, 'name', e.target.value)}
+                  onChange={(e) =>
+                    updateSkill(skill.id, "name", e.target.value)
+                  }
                   placeholder="Skill name"
                   className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
@@ -68,24 +85,32 @@ export function SkillsEditor({ section, onChange }: Props) {
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_160px] gap-2 sm:items-center">
                 <input
                   type="text"
                   value={skill.category}
-                  onChange={(e) => updateSkill(skill.id, 'category', e.target.value)}
+                  onChange={(e) =>
+                    updateSkill(skill.id, "category", e.target.value)
+                  }
                   placeholder="Category"
-                  className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
+                  className="w-full min-w-0 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-cloud text-sm"
                 />
-                <div className="flex items-center gap-2">
+                <div className="w-full rounded-lg border border-white/10 bg-white/5 px-2 py-2">
+                  <div className="flex items-center gap-2">
                   <input
                     type="range"
                     min="0"
                     max="100"
                     value={skill.level}
-                    onChange={(e) => updateSkill(skill.id, 'level', parseInt(e.target.value))}
-                    className="w-20"
+                    onChange={(e) =>
+                      updateSkill(skill.id, "level", parseInt(e.target.value, 10))
+                    }
+                    className="w-full min-w-0"
                   />
-                  <span className="text-fog/50 text-sm w-10">{skill.level}%</span>
+                    <span className="shrink-0 w-12 text-right text-fog/70 text-sm font-medium">
+                    {skill.level}%
+                  </span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -18,7 +18,7 @@ export function ProjectsSection({ section, isEditing }: Props) {
   return (
     <section
       data-section-type="projects"
-      className="py-28 px-6 relative overflow-hidden"
+      className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative overflow-hidden"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -65,9 +65,9 @@ export function ProjectsSection({ section, isEditing }: Props) {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2
-            className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight"
             style={{ color: theme.textColor }}
           >
             {data.title || 'My Projects'}
@@ -77,7 +77,7 @@ export function ProjectsSection({ section, isEditing }: Props) {
             style={{ backgroundColor: theme.primaryColor }}
           />
           <p
-            className="text-lg max-w-2xl mx-auto opacity-70"
+            className="text-base sm:text-lg max-w-2xl mx-auto opacity-70"
             style={{ color: `${theme.textColor}80` }}
           >
             {data.subtitle || 'Check out my latest work'}
@@ -86,7 +86,7 @@ export function ProjectsSection({ section, isEditing }: Props) {
 
         {/* Projects Grid */}
         {data.projects && data.projects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
             {data.projects.map((project) => (
               <div
                 key={project.id}
@@ -127,7 +127,7 @@ export function ProjectsSection({ section, isEditing }: Props) {
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
                   {/* Overlay Actions */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4">
+                  <div className="absolute inset-0 hidden sm:flex opacity-0 group-hover:opacity-100 transition-all duration-500 items-center justify-center gap-4">
                     {project.liveUrl && (
                       <a
                         href={project.liveUrl}
@@ -162,9 +162,9 @@ export function ProjectsSection({ section, isEditing }: Props) {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-6 relative">
+                <div className="p-4 sm:p-6 relative">
                   <h3
-                    className="text-xl font-bold mb-2 group-hover:text-primary transition-colors"
+                    className="text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition-colors"
                     style={{ color: theme.textColor }}
                   >
                     {project.title}
@@ -175,6 +175,39 @@ export function ProjectsSection({ section, isEditing }: Props) {
                   >
                     {project.description}
                   </p>
+
+                  {(project.liveUrl || project.githubUrl) && (
+                    <div className="mb-4 flex flex-wrap gap-2 sm:hidden">
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 text-sm font-medium flex items-center gap-2"
+                          style={{
+                            backgroundColor: theme.primaryColor,
+                            borderRadius: radius,
+                            color: 'black',
+                          }}
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          <span>Live</span>
+                        </a>
+                      )}
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 text-sm font-medium flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/20"
+                          style={{ borderRadius: radius }}
+                        >
+                          <Github className="w-4 h-4" />
+                          <span>Source</span>
+                        </a>
+                      )}
+                    </div>
+                  )}
 
                   {/* Tags */}
                   {project.tags && project.tags.length > 0 && (

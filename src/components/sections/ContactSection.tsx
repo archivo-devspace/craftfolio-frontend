@@ -29,7 +29,6 @@ const socialIcons: Record<string, typeof Github> = {
 
 export function ContactSection({ section, isEditing }: Props) {
   const { data } = section;
-  console.log('data', data)
   const { theme, radius, themeStyles } = useTheme();
 
   const getSocialIcon = (platform: string) => {
@@ -72,7 +71,7 @@ export function ContactSection({ section, isEditing }: Props) {
   return (
     <section
       data-section-type="contact"
-      className="py-28 px-6 relative overflow-hidden"
+      className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative overflow-hidden"
       style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
@@ -119,9 +118,9 @@ export function ContactSection({ section, isEditing }: Props) {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2
-            className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight"
             style={{ color: theme.textColor }}
           >
             {data.title || 'Get In Touch'}
@@ -131,18 +130,18 @@ export function ContactSection({ section, isEditing }: Props) {
             style={{ backgroundColor: theme.primaryColor }}
           />
           <p
-            className="text-lg max-w-2xl mx-auto opacity-70"
+            className="text-base sm:text-lg max-w-2xl mx-auto opacity-70"
             style={{ color: `${theme.textColor}80` }}
           >
             {data.subtitle || "Let's work together on something great"}
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8">
           {/* Contact Info */}
           <div className="space-y-6">
             <div
-              className="p-8 relative overflow-hidden transition-all duration-500"
+              className="p-5 sm:p-8 relative overflow-hidden transition-all duration-500"
               style={{
                 backgroundColor: theme.backgroundColor,
                 borderRadius: radius,
@@ -173,19 +172,10 @@ export function ContactSection({ section, isEditing }: Props) {
               <div className="space-y-4 relative z-10">
                 {contactInfoItems.map((item, index) => {
                   const Icon = item.icon;
-                  return (
-                    <a
-                      key={index}
-                      href={item.href || '#'}
-                      className="flex items-center gap-4 p-4 transition-all hover:scale-[1.02] group"
-                      style={{
-                        backgroundColor: `${theme.textColor}5`,
-                        borderRadius: radius,
-                        border: `1px solid ${theme.textColor}10`,
-                      }}
-                    >
+                  const itemContent = (
+                    <>
                       <div
-                        className="p-3 transition-colors group-hover:scale-110"
+                        className="p-2 sm:p-3 transition-colors group-hover:scale-110"
                         style={{
                           backgroundColor: `${item.color}15`,
                           color: item.color,
@@ -195,12 +185,45 @@ export function ContactSection({ section, isEditing }: Props) {
                         <Icon />
                       </div>
                       <div>
-                        <p className="text-sm" style={{ color: `${theme.textColor}60` }}>
+                        <p className="text-xs sm:text-sm" style={{ color: `${theme.textColor}60` }}>
                           {item.label}
                         </p>
-                        <p style={{ color: theme.textColor }}>{item.value}</p>
+                        <p className="text-sm sm:text-base break-all" style={{ color: theme.textColor }}>
+                          {item.value}
+                        </p>
                       </div>
-                    </a>
+                    </>
+                  );
+
+                  const baseClassName =
+                    'flex items-center gap-3 sm:gap-4 p-3 sm:p-4 transition-all sm:hover:scale-[1.02] group';
+                  const baseStyle = {
+                    backgroundColor: `${theme.textColor}5`,
+                    borderRadius: radius,
+                    border: `1px solid ${theme.textColor}10`,
+                  };
+
+                  if (item.href) {
+                    return (
+                      <a
+                        key={index}
+                        href={item.href}
+                        className={baseClassName}
+                        style={baseStyle}
+                      >
+                        {itemContent}
+                      </a>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className={baseClassName}
+                      style={baseStyle}
+                    >
+                      {itemContent}
+                    </div>
                   );
                 })}
               </div>
@@ -209,7 +232,7 @@ export function ContactSection({ section, isEditing }: Props) {
             {/* Social Links */}
             {data.socials && data.socials.length > 0 && (
               <div
-                className="p-6 relative overflow-hidden"
+                className="p-4 sm:p-6 relative overflow-hidden"
                 style={{
                   backgroundColor: theme.backgroundColor,
                   borderRadius: radius,
@@ -253,7 +276,7 @@ export function ContactSection({ section, isEditing }: Props) {
           {/* Contact Form */}
           {data.showForm && (
             <div
-              className="p-8 relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
+              className="p-5 sm:p-8 relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
               style={{
                 backgroundColor: theme.backgroundColor,
                 borderRadius: radius,
@@ -268,7 +291,7 @@ export function ContactSection({ section, isEditing }: Props) {
                 }}
               />
 
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-3 relative z-10" style={{ color: theme.textColor }}>
+              <h3 className="text-lg sm:text-xl font-bold mb-5 sm:mb-6 flex items-center gap-3 relative z-10" style={{ color: theme.textColor }}>
                 <div
                   className="p-2 rounded-lg"
                   style={{
@@ -279,7 +302,7 @@ export function ContactSection({ section, isEditing }: Props) {
                 </div>
                 Send a Message
               </h3>
-              <form className="space-y-5 relative z-10" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-4 sm:space-y-5 relative z-10" onSubmit={(e) => e.preventDefault()}>
                 <div>
                   <label className="block text-sm mb-2" style={{ color: `${theme.textColor}80` }}>
                     Name
@@ -366,7 +389,7 @@ export function ContactSection({ section, isEditing }: Props) {
 
                 <button
                   type="submit"
-                  className="w-full py-4 font-semibold transition-all flex items-center justify-center gap-2 hover:scale-[1.02]"
+                  className="w-full py-3 sm:py-4 font-semibold transition-all flex items-center justify-center gap-2 hover:scale-[1.02]"
                   style={{
                     backgroundColor: theme.primaryColor,
                     color: '#000',
