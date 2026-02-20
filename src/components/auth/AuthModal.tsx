@@ -18,11 +18,14 @@ export function AuthModal({ isOpen, onClose }: Props) {
   const [name, setName] = useState('');
   
   const { login, register, isLoading, error, clearError } = useAuthStore();
-  const { loadPortfolio } = usePortfolioStore();
+  const { loadPortfolio, resetPortfolio } = usePortfolioStore();
 
   if (!isOpen) return null;
 
   const fetchAndLoadUserPortfolio = async () => {
+    // Ensure we never keep stale data from previous account
+    resetPortfolio();
+
     const result = await api.getPortfolios();
     if (result.data && result.data.length > 0) {
       // Load the most recent portfolio
@@ -35,7 +38,6 @@ export function AuthModal({ isOpen, onClose }: Props) {
         theme: latestPortfolio.theme as unknown as import('@/types/portfolio').PortfolioTheme,
         sections: latestPortfolio.sections as unknown as import('@/types/portfolio').Section[],
       });
-      console.log('✅ Loaded portfolio:', latestPortfolio.name);
     }
   };
 

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { api, User } from '@/lib/api';
+import { usePortfolioStore } from '@/store/portfolioStore';
 
 interface AuthState {
   user: User | null;
@@ -72,6 +73,7 @@ export const useAuthStore = create<AuthState>()(
 
       logout: () => {
         api.setToken(null);
+        usePortfolioStore.getState().resetPortfolio();
         set({
           user: null,
           isAuthenticated: false,
@@ -82,6 +84,7 @@ export const useAuthStore = create<AuthState>()(
       checkAuth: async () => {
         const token = api.getToken();
         if (!token) {
+          usePortfolioStore.getState().resetPortfolio();
           set({ isAuthenticated: false, user: null });
           return;
         }
@@ -91,6 +94,7 @@ export const useAuthStore = create<AuthState>()(
 
         if (result.error) {
           api.setToken(null);
+          usePortfolioStore.getState().resetPortfolio();
           set({ isAuthenticated: false, user: null, isLoading: false });
           return;
         }
